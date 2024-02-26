@@ -1,0 +1,19 @@
+{
+    "name": "structurize/structurize",
+    "description": "This package serves as a tool to seamlessly connect with the Structurize API.",
+    "type": "library",
+    "require": {
+        "guzzlehttp/guzzle": "^7.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Structurize\\Structurize\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Dieter Coopman",
+            "email": "dieter@deltasolutions.be"
+        }
+    ]
+}
