@@ -25,3 +25,49 @@ Structurize is a powerful set of modular components, each serving a specific pur
 4. **Development:** Code with confidence, knowing that each brick contributes to the overall robustness and efficiency of your software.
 
 With Structurize, your journey in software development becomes a creative and efficient process. Let your ideas flow, and build with confidence – where each brick in the structure holds the promise of technological greatness.
+
+# Structurize Bricks
+
+Structurize offers a comprehensive set of modular bricks, each designed to perform specific tasks and enhance various aspects of software development. Below is a description of the available bricks:
+
+1. **image.blur**
+   - *Functionality:* Apply blurring effects to images.
+   - *Use Case:* Enhance privacy by obscuring sensitive information in images.
+
+2. **image.ocr**
+   - *Functionality:* Extract text information from images using Optical Character Recognition (OCR).
+   - *Use Case:* Enable text extraction from images for further processing.
+
+3. **image.removebg**
+   - *Functionality:* Remove the background from images.
+   - *Use Case:* Create visually appealing images with transparent backgrounds.
+
+4. **image.resize**
+   - *Functionality:* Resize images to specific dimensions.
+   - *Use Case:* Optimize image sizes for various display requirements.
+
+5. **speech.totext**
+   - *Functionality:* Convert spoken words into text.
+   - *Use Case:* Enable transcription services for audio content.
+
+6. **text.tospeech**
+   - *Functionality:* Convert text into spoken words.
+   - *Use Case:* Implement text-to-speech functionality for accessibility or user interaction.
+
+7. **visionai**
+   - *Functionality:* Harness the power of advanced computer vision algorithms.
+   - *Use Case:* Perform complex image recognition and analysis tasks.
+
+8. **storage.get**
+   - *Functionality:* Retrieve data from storage.
+   - *Use Case:* Access previously stored information for further processing.
+
+9. **storage.put**
+   - *Functionality:* Store data in storage.
+   - *Use Case:* Save processed or generated data for future use.
+
+10. **storage.download**
+   - *Functionality:* Download data from storage to the local environment.
+   - *Use Case:* Retrieve stored data for local processing or analysis.
+
+These bricks are the fundamental components that empower developers to build a diverse range of applications efficiently. Whether you are working on image manipulation, speech processing, text conversion, or data storage, Structurize provides the tools you need for a seamless and modular development experience. Mix and match these bricks to create a powerful and tailored solution for your software projects.
