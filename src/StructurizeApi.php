@@ -7,7 +7,7 @@ use function Sodium\add;
 
 class StructurizeApi
 {
-    private $baseUrl = 'http://127.0.0.1:5000/api/v1/';
+    private $baseUrl = 'http://178.62.212.130/api/v1/';
     protected $response = '';
 
     public function call($endpoint, $data, $method = 'POST')
