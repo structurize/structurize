@@ -27,7 +27,7 @@ class Building extends StructurizeApi
         foreach ($this->bricks as $brick) {
             $building[] = json_decode((string)$brick);
         }
-        $building = json_encode(['init' => $this->args, 'building' => $building]);
+        $building = json_encode(['init' => $this->args, 'bricks' => $building]);
         return $building;
 
     }
