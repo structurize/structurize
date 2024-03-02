@@ -2,9 +2,6 @@
 
 namespace Structurize\Structurize;
 
-use phpDocumentor\Reflection\Types\Parent_;
-use function Sodium\add;
-
 class StructurizeApi
 {
     private $baseUrl = 'http://178.62.212.130/api/v1/';
@@ -12,20 +9,39 @@ class StructurizeApi
 
     public function call($endpoint, $data, $method = 'POST')
     {
-        //call using guzzle
 
-        $client = new \GuzzleHttp\Client();
-        $response = $client->request($method, $this->baseUrl . $endpoint, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $_ENV['SMARTBRICKS_API_KEY'],
+        // Prepare cURL options
+        $curlOptions = [
+            CURLOPT_URL => $this->baseUrl . $endpoint,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST => $method,
+            CURLOPT_HTTPHEADER => [
+                'Content-Type: application/json',
+                'Authorization: Bearer ' . $_ENV['SMARTBRICKS_API_KEY'],
             ],
-            'json' => $data
+        ];
 
-        ]);
-        //get json response
-        $this->response = json_decode($response->getBody(), false);
-        return $this;
+        // Add JSON data if present
+        if (!empty($data)) {
+            $curlOptions[CURLOPT_POSTFIELDS] = json_encode($data);
+        }
+
+        // Initialize cURL session
+        $ch = curl_init();
+
+        // Set cURL options
+        curl_setopt_array($ch, $curlOptions);
+
+        // Execute cURL session
+        $response = curl_exec($ch);
+
+        // Close cURL session
+        curl_close($ch);
+
+        // Decode JSON response
+        return json_decode($response, false);
+
+
     }
 
     public function __toString()
@@ -36,14 +52,15 @@ class StructurizeApi
         return $this->response->id;
     }
 
-    public function run(){
+    public function run()
+    {
         //get class name
         $class = get_class($this);
         //if class name is not Building
-        if($class != 'Structurize\Structurize\Building'){
+        if ($class != 'Structurize\Structurize\Building') {
             //call the endpoint
             $this->as = 'download';
-            $building = '{"init":{},"building":['.$this->__toString().',{"brick":"download", "parameters": {"input": "$download"}}]}';
+            $building = '{"init":{},"building":[' . $this->__toString() . ',{"brick":"download", "parameters": {"input": "$download"}}]}';
             $this->call('building', ['building' => $building]);
         }
     }
