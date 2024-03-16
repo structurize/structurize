@@ -59,7 +59,7 @@ class StructurizeApi
         if ($class != 'Structurize\Structurize\Building') {
             //call the endpoint
             $this->as = 'download';
-            $building = '{"init":{},"bricks":[' . $this->__toString() . ',{"brick":"download", "parameters": {"input": "$download"}}]}';
+            $building = '{"sync" :'.$sync.', "init":{},"bricks":[' . $this->__toString() . ']}';
             $this->call('building', ['building' => $building]);
         }
     }
