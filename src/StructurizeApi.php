@@ -4,20 +4,19 @@ namespace Structurize\Structurize;
 
 class StructurizeApi
 {
-    private $baseUrl = 'http://178.62.212.130/api/v1/';
+
     protected $response = '';
 
     public function call($endpoint, $data, $method = 'POST')
     {
-
         // Prepare cURL options
         $curlOptions = [
-            CURLOPT_URL => $this->baseUrl . $endpoint,
+            CURLOPT_URL => $_ENV['STRUCTURIZE_API_URL'] . $endpoint,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => $method,
             CURLOPT_HTTPHEADER => [
                 'Content-Type: application/json',
-                'Authorization: Bearer ' . $_ENV['SMARTBRICKS_API_KEY'],
+                'Authorization: Bearer ' . $_ENV['STRUCTURIZE_API_KEY'],
             ],
         ];
 
