@@ -16,24 +16,24 @@ class Building extends StructurizeApi
         return $this;
     }
 
-    public function add($brick)
+    public function add(Brick $brick): self
     {
         $this->bricks[] = $brick;
         return $this;
     }
 
-    public function build()
+    public function run(bool $sync = false)
+    {
+        return $this->call($this->endpoint, ['building' => $this->build($sync)]);
+    }
+
+    private function build(bool $sync = false)
     {
         foreach ($this->bricks as $brick) {
             $building[] = json_decode((string)$brick);
         }
-        $building = json_encode(['init' => $this->args, 'bricks' => $building]);
+        $building = json_encode(['sync' => $sync, 'init' => $this->args, 'bricks' => $building]);
         return $building;
 
-    }
-
-    public function run()
-    {
-        return $this->call($this->endpoint, ['building' => $this->build()]);
     }
 }
