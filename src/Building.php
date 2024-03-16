@@ -16,7 +16,7 @@ class Building extends StructurizeApi
         return $this;
     }
 
-    public function add(Brick $brick): self
+    public function add($brick): self
     {
         $this->bricks[] = $brick;
         return $this;

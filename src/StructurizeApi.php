@@ -7,7 +7,7 @@ class StructurizeApi
 
     protected $response = '';
 
-    public function call($endpoint, $data, $method = 'POST') : string
+    public function call($endpoint, $data, $method = 'POST')
     {
         // Prepare cURL options
         $curlOptions = [
@@ -51,7 +51,7 @@ class StructurizeApi
         return $this->response->id;
     }
 
-    public function run($sync = false)
+    public function run(bool $sync = false)
     {
         //get class name
         $class = get_class($this);
@@ -59,7 +59,7 @@ class StructurizeApi
         if ($class != 'Structurize\Structurize\Building') {
             //call the endpoint
             $this->as = 'download';
-            $building = '{"sync": '.$sync.',"init":{},"building":[' . $this->__toString() . ',{"brick":"download", "parameters": {"input": "$download"}}]}';
+            $building = '{"init":{},"bricks":[' . $this->__toString() . ',{"brick":"download", "parameters": {"input": "$download"}}]}';
             $this->call('building', ['building' => $building]);
         }
     }
