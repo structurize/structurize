@@ -11,7 +11,7 @@ class ImageOcr extends StructurizeApi implements Brick
      * @param string $input
      * @return void
      */
-    public function parameters(string $input)
+    public function __construct(string $input)
     {
         $this->input = $input;
         return $this;

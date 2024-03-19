@@ -10,7 +10,7 @@ class PeppolSend extends StructurizeApi implements Brick
     private $name;
     private $ubl;
 
-    public function parameters(string $name, string $ubl)
+    public function __construct(string $name, string $ubl)
     {
         $this->name = $name;
         $this->ubl = $ubl;

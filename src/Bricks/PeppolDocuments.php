@@ -9,7 +9,7 @@ class PeppolDocuments extends StructurizeApi implements Brick
 
     private $identifier;
 
-    public function parameters(string $identifier)
+    public function __construct(string $identifier)
     {
         $this->identifier = $identifier;
         return $this;

@@ -10,7 +10,7 @@ class TextTranslate extends StructurizeApi implements Brick
      * @param string $input
      * @return void
      */
-    public function parameters(string $input, $prompt = '')
+    public function __construct(string $input, $prompt = '')
     {
         $this->input = $input;
         $this->prompt = $prompt;

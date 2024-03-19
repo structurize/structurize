@@ -11,7 +11,7 @@ class ImageMerge extends StructurizeApi implements Brick
      * @param string $background
      * @return void
      */
-    public function parameters(string $foreground, string $background)
+    public function __construct(string $foreground, string $background)
     {
         $this->foreground = $foreground;
         $this->background = $background;

@@ -11,7 +11,7 @@ class StorageGet extends StructurizeApi implements Brick
      * @param string $input
      * @return void
      */
-    public function parameters(string $filename)
+    public function __construct(string $filename)
     {
         $this->filename = $filename;
         return $this;

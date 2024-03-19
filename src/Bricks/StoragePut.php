@@ -10,7 +10,7 @@ class StoragePut extends StructurizeApi implements Brick
      * @param string $input
      * @return void
      */
-    public function parameters(string $filename, string $input)
+    public function __construct(string $filename, string $input)
     {
         $this->filename = $filename;
         $this->input = $input;

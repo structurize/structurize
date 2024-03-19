@@ -13,7 +13,7 @@ class ImageVision implements Brick
      * @param string $prompt
      * @return void
      */
-    public function parameters(string $input, string $prompt = null)
+    public function __construct(string $input, string $prompt = null)
     {
         $this->input = $input;
         $this->prompt = $prompt;
