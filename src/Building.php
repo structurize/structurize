@@ -27,6 +27,11 @@ class Building extends StructurizeApi
         return $this->call($this->endpoint, ['building' => $this->build($sync)]);
     }
 
+    public function __toString()
+    {
+        return "{\"building\" : {$this->build()}}";
+    }
+
     private function build(bool $sync = false)
     {
         foreach ($this->bricks as $brick) {
