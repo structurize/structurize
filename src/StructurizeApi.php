@@ -65,4 +65,13 @@ class StructurizeApi
             return $this->call('building', ['building' => $building]);
         }
     }
+
+    static function download(string $uuid){
+        return self::call('download/'.$uuid, [], 'GET');
+    }
+
+    static function getDownloadUrl(string $uuid){
+        return $_ENV['STRUCTURIZE_API_URL'] . 'download/'.$uuid;
+    }
+
 }
