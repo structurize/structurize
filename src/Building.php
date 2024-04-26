@@ -25,16 +25,6 @@ class Building extends StructurizeApi
     public function withParams($params): self
     {
         $this->args = $params;
-        if (isset($this->fileVariableName)) {
-            # find the file variable name in the args and replace it with the filename
-            $this->args = array_map(function ($arg) {
-                if ($arg === $this->fileVariableName) {
-                    return $this->filename;
-                }
-                return $arg;
-            }, $this->args);
-        }
-
         return $this;
     }
 
@@ -43,6 +33,7 @@ class Building extends StructurizeApi
         $this->file = $file;
         $this->fileVariableName = $variableName;
         $this->filename = Str::orderedUuid();
+        $this->args[str_replace('$','',$variableName)] = $this->filename;
         return $this;
     }
 
