@@ -14,6 +14,8 @@ class Building extends StructurizeApi
     private $filename;
     private $fileVariableName;
     private $name;
+    private $returns;
+    private $args;
 
     public function __construct()
     {
@@ -67,6 +69,11 @@ class Building extends StructurizeApi
         return $this->call($this->endpoint, ['building' => $building]);
     }
 
+    public function returns($returns = []){
+        $this->returns = $returns;
+        return $this;
+    }
+
     public function __toString()
     {
         return "{\"building\" : {$this->build()}}";
@@ -77,7 +84,7 @@ class Building extends StructurizeApi
         foreach ($this->bricks as $brick) {
             $building[] = json_decode((string)$brick);
         }
-        $building = json_encode(['sync' => $sync, 'name' => $this->name ?? 'Building ... ', 'init' => $this->args ?? [], 'bricks' => $building]);
+        $building = json_encode(['sync' => $sync, 'name' => $this->name ?? 'Building ... ', 'init' => $this->args ?? [], 'bricks' => $building, 'returns' => $this->returns ?? []]);
         return $building;
 
     }
