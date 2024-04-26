@@ -7,18 +7,22 @@ class StructurizeApi
 
     protected $response = '';
 
-    public function call($endpoint, $data, $method = 'POST')
+    public static function call($endpoint, $data, $method = 'POST', $options = null)
     {
-        // Prepare cURL options
-        $curlOptions = [
-            CURLOPT_URL => $_ENV['STRUCTURIZE_API_URL'] . $endpoint,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_CUSTOMREQUEST => $method,
-            CURLOPT_HTTPHEADER => [
-                'Content-Type: application/json',
-                'Authorization: Bearer ' . $_ENV['STRUCTURIZE_API_KEY'],
-            ],
-        ];
+        if ($options) {
+            $curlOptions = $options;
+        } else {
+            // Prepare cURL options
+            $curlOptions = [
+                CURLOPT_URL => $_ENV['STRUCTURIZE_API_URL'] . $endpoint,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_CUSTOMREQUEST => $method,
+                CURLOPT_HTTPHEADER => [
+                    'Content-Type: application/json',
+                    'Authorization: Bearer ' . $_ENV['STRUCTURIZE_API_KEY'],
+                ],
+            ];
+        }
 
         // Add JSON data if present
         if (!empty($data)) {
@@ -43,6 +47,22 @@ class StructurizeApi
 
     }
 
+    public function sendFile($file, $name)
+    {
+        $curlOptions = [
+            CURLOPT_URL => $_ENV['STRUCTURIZE_API_URL'] . 'upload',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array('file' => new \CURLFile($file, mime_content_type($file), posted_filename: $name)),
+            CURLOPT_HTTPHEADER => [
+                'Authorization: Bearer ' . $_ENV['STRUCTURIZE_API_KEY'],
+            ],
+        ];
+
+        return $this->call('upload', [], 'POST', $curlOptions);
+
+    }
+
     public function __toString()
     {
         if (isset($this->response->data)) {
@@ -60,18 +80,19 @@ class StructurizeApi
             //call the endpoint
             $this->as = 'download';
 
-            $building = '{"sync":'.(int)$sync.', "init":{},"bricks":[' . $this->__toString() . ']}';
+            $building = '{"sync":' . (int)$sync . ', "init":{},"bricks":[' . $this->__toString() . ']}';
 
-            return $this->call('building', ['building' => $building]);
+            return self::call('building', ['building' => $building]);
         }
     }
 
-    static function download(string $uuid){
-        return self::call('download/'.$uuid, [], 'GET');
+    static function download(string $uuid)
+    {
+        return self::call('download/' . $uuid, [], 'GET');
     }
 
-    static function getDownloadUrl(string $uuid){
-        return $_ENV['STRUCTURIZE_API_URL'] . 'download/'.$uuid;
+    static function getDownloadUrl(string $uuid)
+    {
+        return $_ENV['STRUCTURIZE_API_URL'] . 'download/' . $uuid;
     }
-
 }

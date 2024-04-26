@@ -4,16 +4,16 @@ namespace Structurize\Structurize\Bricks;
 
 use Structurize\Structurize\StructurizeApi;
 
-class StorageGet extends StructurizeApi implements Brick
+class S3Download extends StructurizeApi implements Brick
 {
 
     /**
      * @param string $input
      * @return void
      */
-    public function __construct(string $filename)
+    public function __construct(string $input)
     {
-        $this->filename = $filename;
+        $this->input = $input;
         return $this;
     }
 
@@ -26,6 +26,6 @@ class StorageGet extends StructurizeApi implements Brick
 
     public function __toString()
     {
-        return json_encode(["brick" => "storage.get", "parameters" => ["filename" => $this->filename], "as" => $this->as]);
+        return json_encode(["brick" => "s3.download", "parameters" => ["input" => $this->input]]);
     }
 }
