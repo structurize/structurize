@@ -10,9 +10,10 @@ class ImageRemoveBg extends StructurizeApi implements Brick
      * @param string $input
      * @return void
      */
-    public function __construct(string $input)
+    public function __construct(string $input, string $onlyIf = "")
     {
         $this->input = $input;
+        $this->onlyIf = $onlyIf;
         return $this;
     }
 
@@ -25,6 +26,6 @@ class ImageRemoveBg extends StructurizeApi implements Brick
 
     public function __toString()
     {
-        return json_encode(["brick" => "image.removebg", "parameters" => ["input" => $this->input], "as" => $this->as]);
+        return json_encode(["brick" => "image.removebg", "parameters" => ["input" => $this->input, "onlyIf" => $this->onlyIf ], "as" => $this->as]);
     }
 }
