@@ -42,9 +42,18 @@ class StructurizeApi
         curl_close($ch);
 
         // Decode JSON response
+
+        if(!self::isJson($response)){
+            return $response;
+        }
         return json_decode($response, false);
 
 
+    }
+
+    private static function isJson($string) {
+        json_decode($string);
+        return (json_last_error() === JSON_ERROR_NONE);
     }
 
     public function sendFile($file, $name)
