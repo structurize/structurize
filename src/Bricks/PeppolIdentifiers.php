@@ -7,17 +7,17 @@ use Structurize\Structurize\StructurizeApi;
 class PeppolIdentifiers extends StructurizeApi implements Brick
 {
 
-    private $identifier;
+    private $vatNumber;
 
-    public function __construct(string $identifier)
+    public function __construct(string $vatNumber)
     {
-        $this->identifier = $identifier;
+        $this->vatNumber = $vatNumber;
         return $this;
     }
 
     public function __toString()
     {
 
-        return json_encode(["brick" => "peppol.identifiers", "parameters" => ["identifier" => $this->identifier]]);
+        return json_encode(["brick" => "peppol.identifiers", "parameters" => ["vatNumber" => $this->vatNumber]]);
     }
 }
