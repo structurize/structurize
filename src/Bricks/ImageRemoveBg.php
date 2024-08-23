@@ -26,6 +26,6 @@ class ImageRemoveBg extends StructurizeApi implements Brick
 
     public function __toString()
     {
-        return json_encode(["brick" => "image.removebg", "parameters" => ["input" => $this->input, "onlyIf" => $this->onlyIf ], "as" => $this->as]);
+        return json_encode(["brick" => "image.removebg", "parameters" => ["inputstream" => $this->input, "onlyIf" => $this->onlyIf ], "as" => $this->as]);
     }
 }

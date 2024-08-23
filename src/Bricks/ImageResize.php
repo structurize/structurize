@@ -28,6 +28,6 @@ class ImageResize extends StructurizeApi implements Brick
 
     public function __toString()
     {
-        return json_encode(["brick" => "image.resize", "parameters" => ["input" => $this->input, "width" => $this->width , "format" => $this->format], "as" => $this->as]);
+        return json_encode(["brick" => "image.resize", "parameters" => ["inputstream" => $this->input, "width" => $this->width , "outputformat" => $this->format], "as" => $this->as]);
     }
 }

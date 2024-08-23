@@ -29,6 +29,6 @@ class ImageVision implements Brick
 
     public function __toString()
     {
-        return json_encode(["brick" => "image.vision", "parameters" => ["input" => $this->input, "prompt" => $this->prompt], "as" => $this->as]);
+        return json_encode(["brick" => "image.vision", "parameters" => ["inputstream" => $this->input, "prompt" => $this->prompt], "as" => $this->as]);
     }
 }

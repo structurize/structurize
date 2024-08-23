@@ -25,6 +25,6 @@ class ImageOcr extends StructurizeApi implements Brick
 
     public function __toString()
     {
-        return json_encode(["brick" => "image.ocr", "parameters" => ["input" => $this->input], "as" => $this->as]);
+        return json_encode(["brick" => "image.ocr", "parameters" => ["inputstream" => $this->input], "as" => $this->as]);
     }
 }
