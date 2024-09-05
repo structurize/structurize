@@ -25,6 +25,6 @@ class PdfExtract extends StructurizeApi implements Brick
 
     public function __toString()
     {
-        return json_encode(["brick" => "pdf.extract", "parameters" => ["input" => $this->input], "as" => $this->as]);
+        return json_encode(["brick" => "pdf.extract", "parameters" => ["inputstream" => $this->input], "as" => $this->as]);
     }
 }

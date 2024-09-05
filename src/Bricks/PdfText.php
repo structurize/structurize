@@ -25,6 +25,6 @@ class PdfText extends StructurizeApi implements Brick
 
     public function __toString()
     {
-        return json_encode(["brick" => "pdf.text", "parameters" => ["input" => $this->input], "as" => $this->as]);
+        return json_encode(["brick" => "pdf.text", "parameters" => ["inputstream" => $this->input], "as" => $this->as]);
     }
 }
