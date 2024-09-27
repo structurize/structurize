@@ -2,7 +2,7 @@
 
 namespace Structurize\Structurize\Generator;
 
-class GenericInvoice
+class Invoice
 {
     // Properties with type declarations
     private string $documentType;

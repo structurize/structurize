@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\Transformers;
+namespace Structurize\Structurize\Generator;
 
-class GenericInvoiceLine
+class InvoiceLine
 {
     // Properties with type declarations
     private int $lineId;
