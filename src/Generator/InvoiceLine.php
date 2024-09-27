@@ -84,8 +84,9 @@ class InvoiceLine
     }
 
     // Method to convert object to JSON
-    public function toJson(): string
+    public function __toString(): string
     {
         return json_encode(get_object_vars($this));
     }
+
 }

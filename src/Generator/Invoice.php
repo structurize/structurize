@@ -354,6 +354,7 @@ class Invoice
 
 
     // Lines
+
     /**
      * @return GenericInvoiceLine[]
      */
@@ -368,9 +369,53 @@ class Invoice
     }
 
     // Method to convert object to JSON
-    public function toJson(): string
+    public function __toString(): string
     {
-        return json_encode(get_object_vars($this));
+        $vars = get_object_vars($this);
+
+        $lines = [];
+        foreach ($vars as $key => $value) {
+            if (is_object($value)) {
+                foreach ($value as $k => $v) {
+                    if (is_object($v) && get_class($v) == 'Structurize\Structurize\Generator\InvoiceLine') {
+                        $lines[$k] = json_decode($v->__toString());
+                    }
+                }
+            }
+        }
+        $vars['lines'] = $lines;
+        return json_encode($vars);
+    }
+
+    public function fromJson($json)
+    {
+        $json = json_decode($json);
+        //loop json and set value via setter
+        foreach ($json as $key => $value) {
+            $method = 'set' . ucfirst($key);
+            if (method_exists($this, $method)) {
+                //if the method is setLines, loop the lines and create a new InvoiceLine object
+                if ($method == 'setLines') {
+                    $lines = [];
+                    foreach ($value as $line) {
+                        $invoiceLine = new InvoiceLine();
+                        //$invoiceLine->fromJson(json_encode($line));
+                        foreach ($line as $key => $value) {
+                            $setter = 'set' . ucfirst($key);
+                            $invoiceLine->$setter($value);
+                        }
+                        $lines[] = $invoiceLine;
+                    }
+                    $this->$method((object)($lines));
+                } else {
+                    $this->$method($value);
+                }
+
+
+            }
+        }
+
+
     }
 
 
