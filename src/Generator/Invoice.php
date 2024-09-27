@@ -45,7 +45,7 @@ class Invoice
     // Getters and Setters for each field
 
     // Document Type
-    public function getDocumentType(): string
+    public function getDocumentType(): ?string
     {
         return $this->documentType;
     }
@@ -56,7 +56,7 @@ class Invoice
     }
 
     // Reference
-    public function getReference(): string
+    public function getReference(): ?string
     {
         return $this->reference;
     }
@@ -78,7 +78,7 @@ class Invoice
     }
 
     // Due Date
-    public function getDueDate(): string
+    public function getDueDate(): ?string
     {
         return $this->dueDate;
     }
