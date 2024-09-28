@@ -10,7 +10,7 @@ class Building extends StructurizeApi
 {
     private $endpoint = 'building';
     private $bricks = [];
-    private $file;
+    private $files = [];
     private $filename;
     private $fileVariableName;
     private $name;
@@ -30,10 +30,12 @@ class Building extends StructurizeApi
 
     public function addFile($file, $variableName): self
     {
-        $this->file = $file;
-        $this->fileVariableName = $variableName;
-        $this->filename = Str::orderedUuid();
-        $this->args[str_replace('$','',$variableName)] = $this->filename;
+        $fileObject = new \stdClass();
+        $fileObject->file = $file;
+        $fileObject->fileVariableName = $variableName;
+        $fileObject->filename = Str::orderedUuid();
+        $this->files[] = $fileObject;
+
         return $this;
     }
 
@@ -51,11 +53,14 @@ class Building extends StructurizeApi
 
     public function run(bool $sync = false)
     {
-        $building = $this->build($sync);
-        //if has file
-        if ($this->file) {
-            $this->fileVariableName = $this->sendFile($this->file, $this->filename);
+        if ($this->files != []) {
+            foreach ($this->files as $file) {
+                $return = $this->sendFile($file->file, $file->filename);
+                $this->args[str_replace('$','',$file->fileVariableName)] = $return->id;
+            }
+
         }
+        $building = $this->build($sync);
 
         return $this->call($this->endpoint, ['building' => $building]);
     }
