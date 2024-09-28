@@ -2,11 +2,13 @@
 
 namespace Structurize\Structurize\Bricks;
 
+use Structurize\Structurize\StructurizeApi;
+
 /**
  * @property string $input
  * @property string|null $prompt
  */
-class ImageVision implements Brick
+class ImageVision extends StructurizeApi implements Brick
 {
     /**
      * @param string $input
