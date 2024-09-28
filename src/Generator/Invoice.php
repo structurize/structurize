@@ -5,37 +5,37 @@ namespace Structurize\Structurize\Generator;
 class Invoice
 {
     // Properties with type declarations
-    private string $documentType;
-    private ?string $reference;
-    private ?float $extraCost;
-    private ?string $dueDate;
-    private float $totalVatExcl;
-    private ?string $dueDays;
-    private ?float $balancePaid;
-    private float $lineAmount;
-    private float $totalVatIncl;
-    private string $issueDate;
-    private float $vatAmount;
-    private string $vatPercentage;
-    private ?string $structuredReference;
-    private string $customerName;
-    private ?string $orderNumber;
-    private string $invoiceNumber;
-    private ?string $IBAN;
-    private string $VAT;
-    private ?string $supplierBIC;
+    private string $documentType = 'INVOICE';
+    private string $reference = '';
+    private ?float $extraCost = null;
+    private ?string $dueDate = null;
+    private float $totalVatExcl = 0;
+    private ?string $dueDays = null;
+    private ?float $balancePaid = null;
+    private float $lineAmount = 0;
+    private float $totalVatIncl = 0;
+    private string $issueDate = '';
+    private float $vatAmount = 0;
+    private string $vatPercentage = '';
+    private ?string $structuredReference = null;
+    private string $customerName = '';
+    private ?string $orderNumber = null;
+    private string $invoiceNumber = '';
+    private ?string $IBAN = null;
+    private string $VAT = '';
+    private ?string $supplierBIC = null;
     private object $customerAddress;
-    private string $supplierVAT;
+    private string $supplierVAT = '';
 
-    private ?string $supplierName;
-    private string $customerVAT;
-    private string $supplierVATCountry;
-    private string $customerVATCountry;
-    private ?object $supplierAddress;
-    private ?float $vatExcl;
-    private ?float $balanceDue;
+    private ?string $supplierName = null;
+    private string $customerVAT = '';
+    private string $supplierVATCountry = '';
+    private string $customerVATCountry = '';
+    private ?object $supplierAddress = null;
+    private ?float $vatExcl = null;
+    private ?float $balanceDue = null;
 
-    private ?object $lines;
+    private ?object $lines = null;
 
     // Constructor with property promotion and default null for nullable fields
     public function __construct()
@@ -102,7 +102,7 @@ class Invoice
     // Due Days
     public function getDueDays(): string
     {
-        return $this->dueDays;
+        return $this->dueDays ?? 0;
     }
 
     public function setDueDays(?string $dueDays): void
