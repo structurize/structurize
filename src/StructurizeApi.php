@@ -18,6 +18,7 @@ class StructurizeApi
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_CUSTOMREQUEST => $method,
                 CURLOPT_HTTPHEADER => [
+                    'Accept: application/json',
                     'Content-Type: application/json',
                     'Authorization: Bearer ' . $_ENV['STRUCTURIZE_API_KEY'],
                 ],
