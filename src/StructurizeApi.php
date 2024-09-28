@@ -2,6 +2,8 @@
 
 namespace Structurize\Structurize;
 
+use Illuminate\Support\Str;
+
 class StructurizeApi
 {
 
@@ -88,11 +90,27 @@ class StructurizeApi
         //if class name is not Building
         if ($class != 'Structurize\Structurize\Building') {
             $this->as = 'output';
+            $init = "{}";
+            $extraBrick = '';
+            //if $this->>input contains a f$ and $this->input is a file path
+            if (strpos($this->input, '$') !== true) {
+                //check if the input is a filepath
+                if (file_exists($this->input)) {
+                    $result = $this->sendFile($this->input,Str::orderedUuid());
+                    $this->input = '$input_stream';
+                    $this->args['input'] = $result->id;
+                    $init = json_encode($this->args);
+                    $extraBrick = '{"brick":"file.get","parameters":{"filename":"$input"},"as":"$input_stream"},';
+                }
+
+            }
+
 
             //get the last part of the class name
             $classname = substr(strrchr($class, "\\"), 1);
 
-            $building = '{"sync":' . ($sync ? 'true' : 'false') . ', "name" : "Running single brick for '.$classname.'", "init":{},"bricks":[' . $this->__toString() . '], "returns": ["$output"]}';
+            $building = '{"sync":' . ($sync ? 'true' : 'false') . ', "name" : "Running single brick for '.$classname.'", "init":'.$init.',"bricks":['.$extraBrick. $this->__toString() . '], "returns": ["$output"]}';
+
             return self::call('building', ['building' => $building]);
         }
     }
