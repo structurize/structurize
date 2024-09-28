@@ -87,11 +87,12 @@ class StructurizeApi
         $class = get_class($this);
         //if class name is not Building
         if ($class != 'Structurize\Structurize\Building') {
-            //call the endpoint
-            $this->as = 'download';
+            $this->as = 'output';
 
-            $building = '{"sync":' . (int)$sync . ', "init":{},"bricks":[' . $this->__toString() . ']}';
+            //get the last part of the class name
+            $classname = substr(strrchr($class, "\\"), 1);
 
+            $building = '{"sync":' . ($sync ? 'true' : 'false') . ', "name" : "Running single brick for '.$classname.'", "init":{},"bricks":[' . $this->__toString() . '], "returns": ["$output"]}';
             return self::call('building', ['building' => $building]);
         }
     }
