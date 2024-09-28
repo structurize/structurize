@@ -93,7 +93,7 @@ class StructurizeApi
             $init = "{}";
             $extraBrick = '';
             //if $this->>input contains a f$ and $this->input is a file path
-            if (strpos($this->input, '$') !== true) {
+            if (isset($this->input) && strpos($this->input, '$') !== true) {
                 //check if the input is a filepath
                 if (file_exists($this->input)) {
                     $result = $this->sendFile($this->input,Str::orderedUuid());
