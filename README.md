@@ -28,23 +28,39 @@ To install structurize/structurize, use Composer:
 composer require structurize/structurize
 ```
 
-### Basic Usage
+## Basic Single brick usage
 
-## Programmatic example
+### Get you user information
 
-In this programmatic flow, a series of operations are executed to process an image through a pipeline of actions. The process begins by initializing a new `Building` instance with specified parameters, including a webhook URL and input/output file names. The subsequent actions are chained using the `add` method, forming a sequence of image processing steps:
+```php
+$user = app(Structurize\Structurize\User::class);
+$userInfo = $user->info;
+```
 
-1. **StorageGet Operation:** Retrieves the input image file from storage, specified as 'your_input.jpg', and assigns it to the variable `$input_stream`.
+```json
+{
+  "uuid": "a2365e7c-1b5e-411c-afc4-0e62cd184d09",
+  "name": "Dieter Coopman",
+  "email": "dieter@structurize.be",
+  "wallet": 0,
+  "business_name": "Delta Solutions",
+  "btw_number": "",
+  "address": "Groenbek",
+  "address_number": "3",
+  "postal_code": "8790",
+  "city": "Waregem",
+  "country": "Belgie",
+  "technical_info": {}
+  }
+```
 
-2. **ImageBlur Operation:** Applies a blur effect to the input image stored in `$input_stream` and stores the result in the variable `$blurred`.
+### Image operations
 
-3. **ImageRemoveBg Operation:** Removes the background from the blurred image stored in `$blurred` and saves the result in the variable `$removed`.
+### Blur an image
 
-4. **ImageResize Operation:** Resizes the image stored in `$removed` to a width of 1024 pixels, and the resized image is stored in the variable `$resized`.
 
-5. **StoragePut Operation:** Stores the final resized image, `$resized`, into the specified output file, 'your_output.jpg', in the storage.
 
-This programmatic flow encapsulates a streamlined image processing pipeline, demonstrating the power and flexibility of the underlying Building class and the various image processing operations.
+
 
 ```php
 new Building(['webhook' => 'http://webhook.acme.com', 'input_file' => 'your_input.jpg', 'output_file' => 'your_output.jpg']))
