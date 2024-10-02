@@ -331,7 +331,7 @@ class Invoice
     }
 
     // Supplier Name
-    public function getSupplierName(): string
+    public function getSupplierName(): ?string
     {
         return $this->supplierName;
     }
