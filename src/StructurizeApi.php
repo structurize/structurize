@@ -91,28 +91,29 @@ class StructurizeApi
         if ($class != 'Structurize\Structurize\Building') {
             $this->as = 'output';
             $init = "{}";
-            $extraBrick = '';
-            //if $this->>input contains a f$ and $this->input is a file path
-            if (isset($this->input) && strpos($this->input, '$') !== true) {
-                //check if the input is a filepath
-                if (file_exists($this->input)) {
-                    $result = $this->sendFile($this->input,Str::orderedUuid());
-                    $this->input = '$input_stream';
-                    $this->args['input'] = $result->id;
-                    $init = json_encode($this->args);
-                    $extraBrick = '{"brick":"file.get","parameters":{"filename":"$input"},"as":"$input_stream"},';
-                }
-
-            }
-
-
+            $extraBrick = $this->getExtraBrick();
             //get the last part of the class name
             $classname = substr(strrchr($class, "\\"), 1);
-
+            $init = json_encode($this->args);
             $building = '{"sync":' . ($sync ? 'true' : 'false') . ', "name" : "Running single brick for '.$classname.'", "init":'.$init.',"bricks":['.$extraBrick. $this->__toString() . '], "returns": ["$output"]}';
 
             return self::call('building', ['building' => $building]);
         }
+    }
+
+    public function getExtraBrick($extrabrickNumber = 1){
+        $extraBrick = '';
+
+        if (isset($this->input) && strpos($this->input, '$') !== true) {
+            //check if the input is a filepath
+            if (file_exists($this->input)) {
+                $result = $this->sendFile($this->input,Str::orderedUuid());
+                $this->input = '$input_stream_'. $extrabrickNumber;
+                $this->args['input_'.$extrabrickNumber] = $result->id;
+                $extraBrick = '{"brick":"file.get","parameters":{"filename":"$input_'.$extrabrickNumber.'"},"as":"$input_stream_'.$extrabrickNumber.'"},';
+            }
+        }
+        return $extraBrick;
     }
 
 }
