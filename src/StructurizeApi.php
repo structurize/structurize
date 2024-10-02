@@ -8,7 +8,8 @@ class StructurizeApi
 {
 
     protected $response = '';
-
+    protected $args = [];
+    
     public static function call($endpoint, $data, $method = 'POST', $options = null)
     {
         if ($options) {
