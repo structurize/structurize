@@ -86,30 +86,52 @@ class StructurizeApi
 
     public function run(bool $sync = false)
     {
+
+        //check version of api in $_ENV['STRUCTURIZE_API_URL']
+        $url = $_ENV['STRUCTURIZE_API_URL'];
+        $url = explode('/', $url);
+        $this->version = $url[4];
+
         //get class name
         $class = get_class($this);
         //if class name is not Building
         if ($class != 'Structurize\Structurize\Building') {
             $this->as = '$output';
-            $this->checkInput();
+
+            $extraBrick = $this->checkInput();
+
             //get the last part of the class name
             $classname = substr(strrchr($class, "\\"), 1);
             $init = json_encode($this->args);
-            $building = '{"sync":' . ($sync ? 'true' : 'false') . ', "name" : "Running single brick for '.$classname.'", "init":'.$init.',"bricks":['. $this->__toString() . '], "returns": ["$output"]}';
+            $building = '{"sync":' . ($sync ? 'true' : 'false') . ', "name" : "Running single brick for '.$classname.'", "init":'.$init.',"bricks":['.$extraBrick. $this->__toString() . '], "returns": ["$output"]}';
 
-            return self::call('building', ['building' => json_decode($building,true)]);
+
+            if($this->version == "v1"){
+                return self::call('building', ['building' => $building]);
+            }else {
+                return self::call('building', ['building' => json_decode($building, true)]);
+            }
         }
     }
 
     public function checkInput($extrabrickNumber = 1){
 
+        $extraBrick = '';
         if (isset($this->input) && strpos($this->input, '$') !== true) {
             //check if the input is a filepath
             if (file_exists($this->input)) {
                 $result = $this->sendFile($this->input,Str::orderedUuid());
-                $this->input = $result->id;
+                if($this->version == "v1"){
+                    $this->input = '$input_stream_'. $extrabrickNumber;
+                    $this->args['input_'.$extrabrickNumber] = $result->id;
+                    $extraBrick = '{"brick":"file.get","parameters":{"filename":"$input_'.$extrabrickNumber.'"},"as":"$input_stream_'.$extrabrickNumber.'"},';
+                }else{
+                    $this->input = $result->id;
+                }
             }
         }
+
+        return $extraBrick;
 
     }
 
