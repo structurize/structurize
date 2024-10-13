@@ -19,6 +19,9 @@ class Building extends StructurizeApi
 
     public function __construct()
     {
+        $url = $_ENV['STRUCTURIZE_API_URL'];
+        $url = explode('/', $url);
+        $this->version = $url[4];
         return $this;
     }
 
@@ -53,6 +56,7 @@ class Building extends StructurizeApi
 
     public function run(bool $sync = false)
     {
+        set_time_limit(0);
         if ($this->files != []) {
             foreach ($this->files as $file) {
                 $return = $this->sendFile($file->file, $file->filename);
@@ -62,7 +66,13 @@ class Building extends StructurizeApi
         }
         $building = $this->build($sync);
 
-        return $this->call($this->endpoint, ['building' => $building]);
+
+        if($this->version == "v1"){
+            return self::call($this->endpoint, ['building' => $building]);
+        }else {
+            return self::call($this->endpoint, ['building' => json_decode($building, true)]);
+        }
+
     }
 
     public function returns($returns = []): self

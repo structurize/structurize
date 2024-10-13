@@ -98,7 +98,7 @@ class StructurizeApi
         if ($class != 'Structurize\Structurize\Building') {
             $this->as = '$output';
 
-            $extraBrick = $this->checkInput();
+            $extraBrick = $this->getExtraBrick();
 
             //get the last part of the class name
             $classname = substr(strrchr($class, "\\"), 1);
@@ -114,7 +114,7 @@ class StructurizeApi
         }
     }
 
-    public function checkInput($extrabrickNumber = 1){
+    public function getExtraBrick($extrabrickNumber = 1){
 
         $extraBrick = '';
         if (isset($this->input) && strpos($this->input, '$') !== true) {
