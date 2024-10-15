@@ -20,6 +20,6 @@ class S3Put extends StructurizeApi implements Brick
 
     public function __toString()
     {
-        return json_encode(["brick" => "s3.put", "parameters" => ["filename" => $this->filename, "input" => $this->input]]);
+        return json_encode(["brick" => "s3.put", "parameters" => ["filename" => $this->filename, "inputstream" => $this->input]]);
     }
 }
