@@ -138,7 +138,7 @@ class StructurizeApi
         if (strpos($param, '$') !== true) {
 
             //check if the input is a filepath
-            if (file_exists($param)) {
+            if (strlen($param) < 500 && file_exists($param)) {
                 $result = $this->sendFile($param, Str::orderedUuid());
                 if ($this->version == "v1") {
                     $param = '$input_stream_' . $extrabrickNumber;
