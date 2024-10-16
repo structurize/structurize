@@ -9,15 +9,16 @@ class StructurizeApi
 
     protected $response = '';
     protected $args = [];
-    
-    public static function call($endpoint, $data, $method = 'POST', $options = null)
+
+    public static function call($endpoint, $data, $method = 'POST', $options = null, $customUrl = null)
     {
+
         if ($options) {
             $curlOptions = $options;
         } else {
             // Prepare cURL options
             $curlOptions = [
-                CURLOPT_URL => $_ENV['STRUCTURIZE_API_URL'] . $endpoint,
+                CURLOPT_URL => ($customUrl ?? $_ENV['STRUCTURIZE_API_URL']) . $endpoint,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_CUSTOMREQUEST => $method,
                 CURLOPT_HTTPHEADER => [
