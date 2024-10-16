@@ -117,21 +117,38 @@ class StructurizeApi
     public function getExtraBrick($extrabrickNumber = 1){
 
         $extraBrick = '';
-        if (isset($this->input) && strpos($this->input, '$') !== true) {
-            //check if the input is a filepath
-            if (file_exists($this->input)) {
-                $result = $this->sendFile($this->input,Str::orderedUuid());
-                if($this->version == "v1"){
-                    $this->input = '$input_stream_'. $extrabrickNumber;
-                    $this->args['input_'.$extrabrickNumber] = $result->id;
-                    $extraBrick = '{"brick":"file.get","parameters":{"filename":"$input_'.$extrabrickNumber.'"},"as":"$input_stream_'.$extrabrickNumber.'"},';
-                }else{
-                    $this->input = $result->id;
+
+        if(isset($this->input)){
+            if (is_array($this->input)) {
+                foreach ($this->input as $key => $param) {
+                    $this->input[$key] = $this->parseInputParam($param, $extraBrick,$extrabrickNumber);
                 }
+            } else {
+                $this->input = $this->parseInputParam($this->input, $extraBrick,$extrabrickNumber);
             }
         }
 
         return $extraBrick;
+
+    }
+
+    private function parseInputParam($param, &$extraBrick,$extrabrickNumber)
+    {
+        if (strpos($param, '$') !== true) {
+
+            //check if the input is a filepath
+            if (file_exists($param)) {
+                $result = $this->sendFile($param, Str::orderedUuid());
+                if ($this->version == "v1") {
+                    $param = '$input_stream_' . $extrabrickNumber;
+                    $this->args['input_' . $extrabrickNumber] = $result->id;
+                    $extraBrick = '{"brick":"file.get","parameters":{"filename":"$input_' . $extrabrickNumber . '"},"as":"$input_stream_' . $extrabrickNumber . '"},';
+                } else {
+                    $param = $result->id;
+                }
+            }
+        }
+        return $param;
 
     }
 
