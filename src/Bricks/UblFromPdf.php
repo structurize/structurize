@@ -16,8 +16,14 @@ class UblFromPdf extends StructurizeApi implements Brick
         return $this;
     }
 
+    public function as($name)
+    {
+        $this->as = $name;
+        return $this;
+    }
+
     public function __toString()
     {
-        return json_encode(["brick" => "ubl.frompdf", "parameters" => ["filestream" => $this->filestream]]);
+        return json_encode(["brick" => "ubl.frompdf", "parameters" => ["filestream" => $this->filestream], "as" => $this->as]);
     }
 }
