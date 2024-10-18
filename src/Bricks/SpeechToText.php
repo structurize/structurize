@@ -27,6 +27,6 @@ class SpeechToText extends StructurizeApi implements Brick
 
     public function __toString()
     {
-        return json_encode(["brick" => "speech.totext", "parameters" => ["input" => $this->input], "as" => $this->as]);
+        return json_encode(["brick" => "speech.totext", "parameters" => ["inputstream" => $this->input], "as" => $this->as]);
     }
 }
