@@ -12,7 +12,7 @@ class UblFromInvoice extends StructurizeApi implements Brick
 
     public function __construct(Invoice $invoice)
     {
-        $this->invoice = invoice;
+        $this->invoice = $invoice;
         return $this;
     }
 

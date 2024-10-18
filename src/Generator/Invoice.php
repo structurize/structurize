@@ -7,6 +7,8 @@ class Invoice
     // Properties with type declarations
     private string $documentType = 'INVOICE';
     private string $reference = '';
+    private ?string $fileStream = null;
+    private ?string $fileName = null;
     private ?float $extraCost = null;
     private ?string $dueDate = null;
     private float $totalVatExcl = 0;
@@ -16,26 +18,29 @@ class Invoice
     private float $totalVatIncl = 0;
     private string $issueDate = '';
     private float $vatAmount = 0;
-    private string $vatPercentage = '';
+    private ?string $vatPercentage = '';
     private ?string $structuredReference = null;
-    private string $customerName = '';
     private ?string $orderNumber = null;
     private string $invoiceNumber = '';
     private ?string $IBAN = null;
-    private string $VAT = '';
-    private ?string $supplierBIC = null;
+    private ?string $VAT = '';
+    private string $customerName = '';
     private object $customerAddress;
-    private string $supplierVAT = '';
-
-    private ?string $supplierName = null;
     private string $customerVAT = '';
-    private string $supplierVATCountry = '';
-    private string $customerVATCountry = '';
+    private ?string $customerVATRegime = 'Z';
+    private ?string $customerVATCountry = '';
+    private ?string $customerContactTelephone = null;
+    private ?string $customerContactElectronicMail = null;
+    private string $supplierVAT = '';
+    private ?string $supplierName = null;
     private ?object $supplierAddress = null;
+    private ?string $supplierVATCountry = '';
+    private ?string $supplierBIC = null;
     private ?float $vatExcl = null;
     private ?float $balanceDue = null;
 
-    private ?object $lines = null;
+    private ?array $lines = null;
+    private ?array $taxes = null;
 
     // Constructor with property promotion and default null for nullable fields
     public function __construct()
@@ -64,6 +69,28 @@ class Invoice
     public function setReference(?string $reference): void
     {
         $this->reference = $reference;
+    }
+
+    // File Stream
+    public function getFileStream(): ?string
+    {
+        return $this->fileStream;
+    }
+
+    public function setFileStream(?string $fileStream): void
+    {
+        $this->fileStream = $fileStream;
+    }
+
+    // File Name
+    public function getFileName(): ?string
+    {
+        return $this->fileName;
+    }
+
+    public function setFileName(?string $fileName): void
+    {
+        $this->fileName = $fileName;
     }
 
     // Extra Cost
@@ -166,12 +193,12 @@ class Invoice
     }
 
     // VAT Percentage
-    public function getVatPercentage(): string
+    public function getVatPercentage(): ?string
     {
         return $this->vatPercentage;
     }
 
-    public function setVatPercentage(string $vatPercentage): void
+    public function setVatPercentage(?string $vatPercentage): void
     {
         $this->vatPercentage = $vatPercentage;
     }
@@ -232,12 +259,12 @@ class Invoice
     }
 
     // VAT
-    public function getVAT(): string
+    public function getVAT(): ?string
     {
         return $this->VAT;
     }
 
-    public function setVAT(string $VAT): void
+    public function setVAT(?string $VAT): void
     {
         $this->VAT = $VAT;
     }
@@ -259,9 +286,37 @@ class Invoice
         return $this->customerAddress;
     }
 
-    public function setCustomerAddress(object $customerAddress): void
+    public function setCustomerAddress($street = null, $number = null, $city = null, $zipcode = null, $country = null): void
     {
-        $this->customerAddress = $customerAddress;
+        $customerAddress          = new \stdClass();
+        $customerAddress->street  = $street;
+        $customerAddress->number  = $number;
+        $customerAddress->city    = $city;
+        $customerAddress->zipcode = $zipcode;
+        $customerAddress->country = $country;
+        $this->customerAddress    = $customerAddress;
+    }
+
+    // Customer Contact Telephone
+    public function getCustomerContactTelephone(): ?string
+    {
+        return $this->customerContactTelephone;
+    }
+
+    public function setCustomerContactTelephone(?string $customerContactTelephone): void
+    {
+        $this->customerContactTelephone = $customerContactTelephone;
+    }
+
+    // Customer Contact Electronic Mail
+    public function getCustomerContactElectronicMail(): ?string
+    {
+        return $this->customerContactElectronicMail;
+    }
+
+    public function setCustomerContactElectronicMail(?string $customerContactElectronicMail): void
+    {
+        $this->customerContactElectronicMail = $customerContactElectronicMail;
     }
 
     // Supplier VAT
@@ -286,24 +341,35 @@ class Invoice
         $this->customerVAT = $customerVAT;
     }
 
+    // Customer VAT Regime
+    public function getCustomerVATRegime(): string
+    {
+        return $this->customerVATRegime;
+    }
+
+    public function setCustomerVATRegime(?string $customerVATRegime): void
+    {
+        $this->customerVATRegime = $customerVATRegime;
+    }
+
     // Supplier VAT Country
-    public function getSupplierVATCountry(): string
+    public function getSupplierVATCountry(): ?string
     {
         return $this->supplierVATCountry;
     }
 
-    public function setSupplierVATCountry(string $supplierVATCountry): void
+    public function setSupplierVATCountry(?string $supplierVATCountry): void
     {
         $this->supplierVATCountry = $supplierVATCountry;
     }
 
     // Customer VAT Country
-    public function getCustomerVATCountry(): string
+    public function getCustomerVATCountry(): ?string
     {
         return $this->customerVATCountry;
     }
 
-    public function setCustomerVATCountry(string $customerVATCountry): void
+    public function setCustomerVATCountry(?string $customerVATCountry): void
     {
         $this->customerVATCountry = $customerVATCountry;
     }
@@ -314,9 +380,15 @@ class Invoice
         return $this->supplierAddress;
     }
 
-    public function setSupplierAddress(?object $supplierAddress): void
+    public function setSupplierAddress($street = null, $number = null, $city = null, $zipcode = null, $country = null): void
     {
-        $this->supplierAddress = $supplierAddress;
+        $supplierAddress          = new \stdClass();
+        $supplierAddress->street  = $street;
+        $supplierAddress->number  = $number;
+        $supplierAddress->city    = $city;
+        $supplierAddress->zipcode = $zipcode;
+        $supplierAddress->country = $country;
+        $this->supplierAddress    = $supplierAddress;
     }
 
     // VAT Excl
@@ -352,7 +424,6 @@ class Invoice
         $this->balanceDue = $balanceDue;
     }
 
-
     // Lines
 
     /**
@@ -363,9 +434,19 @@ class Invoice
         return (array)$this->lines;
     }
 
-    public function setLines(?object $lines): void
+    public function setLines(?array $lines): void
     {
         $this->lines = $lines;
+    }
+
+    public function getTaxes(): array
+    {
+        return (array)$this->taxes;
+    }
+
+    public function setTaxes(?array $taxes): void
+    {
+        $this->taxes = $taxes;
     }
 
     // Method to convert object to JSON
@@ -373,17 +454,20 @@ class Invoice
     {
         $vars = get_object_vars($this);
 
-        $lines = [];
+        $lines = $taxes = [];
         foreach ($vars as $key => $value) {
-            if (is_object($value)) {
+            if (is_array($value)) {
                 foreach ($value as $k => $v) {
-                    if (is_object($v) && get_class($v) == 'Structurize\Structurize\Generator\InvoiceLine') {
+                    if (is_object($v) && get_class($v) == InvoiceLine::class) {
                         $lines[$k] = json_decode($v->__toString());
+                    } elseif (is_object($v) && get_class($v) == Tax::class) {
+                        $taxes[$k] = json_decode($v->__toString());
                     }
                 }
             }
         }
         $vars['lines'] = $lines;
+        $vars['taxes'] = $taxes;
         return json_encode($vars);
     }
 
@@ -399,19 +483,30 @@ class Invoice
                     $lines = [];
                     foreach ($value as $line) {
                         $invoiceLine = new InvoiceLine();
-                        //$invoiceLine->fromJson(json_encode($line));
                         foreach ($line as $key => $value) {
                             $setter = 'set' . ucfirst($key);
                             $invoiceLine->$setter($value);
                         }
                         $lines[] = $invoiceLine;
                     }
-                    $this->$method((object)($lines));
+                    $this->$method($lines);
+                } elseif ($method == 'setTaxes') {
+                    $taxes = [];
+                    foreach ($value as $tax) {
+                        $taxLine = new Tax();
+                        foreach ($tax as $key => $value) {
+                            $setter = 'set' . ucfirst($key);
+                            $taxLine->$setter($value);
+                        }
+                        $taxes[] = $taxLine;
+                    }
+                    $this->$method($taxes);
+                } elseif (is_object($value)) {
+                    $params = get_object_vars($value);
+                    $this->$method(...$params);
                 } else {
                     $this->$method($value);
                 }
-
-
             }
         }
 

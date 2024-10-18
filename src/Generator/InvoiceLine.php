@@ -5,12 +5,13 @@ namespace Structurize\Structurize\Generator;
 class InvoiceLine
 {
     // Properties with type declarations
-    private int $lineId;
-    private string $description;
-    private float $quantity;
-    private float $amount;
-    private float $vatPercentage;
-    private ?string $info;
+    private int $lineId = 0;
+    private ?string $name = '';
+    private ?string $description = '';
+    private float $quantity = 0.00;
+    private float $amount = 0.00;
+    private float $vatPercentage = 21.00;
+    private ?string $info = '';
 
     // Constructor using property promotion with nullable type for `info`
     public function __construct(){}
@@ -28,13 +29,24 @@ class InvoiceLine
         $this->lineId = $lineId;
     }
 
+    // Name
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
+    }
+
     // Description
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function setDescription(string $description): void
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
