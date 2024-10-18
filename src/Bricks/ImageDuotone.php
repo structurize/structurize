@@ -4,7 +4,7 @@ namespace Structurize\Structurize\Bricks;
 
 use Structurize\Structurize\StructurizeApi;
 
-class SpeechToText extends StructurizeApi implements Brick
+class ImageDuotone extends StructurizeApi implements Brick
 {
 
     /**
@@ -14,7 +14,6 @@ class SpeechToText extends StructurizeApi implements Brick
     public function __construct(string $input)
     {
         $this->input = $input;
-
         return $this;
     }
 
@@ -27,6 +26,6 @@ class SpeechToText extends StructurizeApi implements Brick
 
     public function __toString()
     {
-        return json_encode(["brick" => "speech.totext", "parameters" => ["inputstream" => $this->input], "as" => $this->as]);
+        return json_encode(["brick" => "image.duotone", "parameters" => ["inputstream" => $this->input], "as" => $this->as]);
     }
 }
