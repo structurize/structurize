@@ -9,21 +9,17 @@ class Invoice
     private string $reference = '';
     private ?string $fileStream = null;
     private ?string $fileName = null;
-    private ?float $extraCost = null;
     private ?string $dueDate = null;
     private float $totalVatExcl = 0;
     private ?string $dueDays = null;
-    private ?float $balancePaid = null;
-    private float $lineAmount = 0;
     private float $totalVatIncl = 0;
     private string $issueDate = '';
     private float $vatAmount = 0;
     private ?string $vatPercentage = '';
     private ?string $structuredReference = null;
-    private ?string $orderNumber = null;
     private string $invoiceNumber = '';
-    private ?string $IBAN = null;
-    private ?string $VAT = '';
+    private ?string $supplierIBAN = null;
+    private ?string $VATAmount = '';
     private string $customerName = '';
     private object $customerAddress;
     private string $customerVAT = '';
@@ -36,8 +32,6 @@ class Invoice
     private ?object $supplierAddress = null;
     private ?string $supplierVATCountry = '';
     private ?string $supplierBIC = null;
-    private ?float $vatExcl = null;
-    private ?float $balanceDue = null;
 
     private ?array $lines = null;
     private ?array $taxes = null;
@@ -93,17 +87,6 @@ class Invoice
         $this->fileName = $fileName;
     }
 
-    // Extra Cost
-    public function getExtraCost(): ?float
-    {
-        return $this->extraCost;
-    }
-
-    public function setExtraCost(?float $extraCost): void
-    {
-        $this->extraCost = $extraCost;
-    }
-
     // Due Date
     public function getDueDate(): ?string
     {
@@ -135,28 +118,6 @@ class Invoice
     public function setDueDays(?string $dueDays): void
     {
         $this->dueDays = $dueDays;
-    }
-
-    // Balance Paid
-    public function getBalancePaid(): ?float
-    {
-        return $this->balancePaid;
-    }
-
-    public function setBalancePaid(?float $balancePaid): void
-    {
-        $this->balancePaid = $balancePaid;
-    }
-
-    // Line Amount
-    public function getLineAmount(): float
-    {
-        return $this->lineAmount;
-    }
-
-    public function setLineAmount(?float $lineAmount): void
-    {
-        $this->lineAmount = $lineAmount;
     }
 
     // Total VAT Incl
@@ -225,16 +186,6 @@ class Invoice
         $this->customerName = $customerName;
     }
 
-    // Order Number
-    public function getOrderNumber(): ?string
-    {
-        return $this->orderNumber;
-    }
-
-    public function setOrderNumber(?string $orderNumber): void
-    {
-        $this->orderNumber = $orderNumber;
-    }
 
     // Invoice Number
     public function getInvoiceNumber(): string
@@ -248,25 +199,14 @@ class Invoice
     }
 
     // IBAN
-    public function getIBAN(): string
+    public function getSupplierIBAN(): string
     {
-        return $this->IBAN;
+        return $this->supplierIBAN;
     }
 
-    public function setIBAN(?string $IBAN): void
+    public function setSupplierIBAN(?string $supplierIBAN): void
     {
-        $this->IBAN = $IBAN;
-    }
-
-    // VAT
-    public function getVAT(): ?string
-    {
-        return $this->VAT;
-    }
-
-    public function setVAT(?string $VAT): void
-    {
-        $this->VAT = $VAT;
+        $this->supplierIBAN = $supplierIBAN;
     }
 
     // Supplier BIC
@@ -391,16 +331,7 @@ class Invoice
         $this->supplierAddress    = $supplierAddress;
     }
 
-    // VAT Excl
-    public function getVatExcl(): ?float
-    {
-        return $this->vatExcl;
-    }
 
-    public function setVatExcl(?float $vatExcl): void
-    {
-        $this->vatExcl = $vatExcl;
-    }
 
     // Supplier Name
     public function getSupplierName(): ?string
@@ -411,17 +342,6 @@ class Invoice
     public function setSupplierName(?string $supplierName): void
     {
         $this->supplierName = $supplierName;
-    }
-
-    // Balance Due
-    public function getBalanceDue(): ?float
-    {
-        return $this->balanceDue;
-    }
-
-    public function setBalanceDue(?float $balanceDue): void
-    {
-        $this->balanceDue = $balanceDue;
     }
 
     // Lines
