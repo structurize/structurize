@@ -19,7 +19,6 @@ class Invoice
     private ?string $structuredReference = null;
     private string $invoiceNumber = '';
     private ?string $supplierIBAN = null;
-    private ?string $VATAmount = '';
     private string $customerName = '';
     private object $customerAddress;
     private string $customerVAT = '';
