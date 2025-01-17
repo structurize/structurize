@@ -221,11 +221,11 @@ class Invoice
     }
 
     // Peppol Identifier
-    public function getPeppolIdentifier(): string
+    public function getPeppolIdentifier(): ?string
     {
         return $this->peppol_identifier;
     }
-    
+
     public function setPeppolIdentifier(?string $peppol_identifier): void
     {
         $this->peppol_identifier = $peppol_identifier;
