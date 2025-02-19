@@ -22,6 +22,7 @@ class Invoice
     private string $customerName = '';
     private object $customerAddress;
     private string $customerVAT = '';
+    private ?string $customerCode = '';
     private ?string $customerVATRegime = 'Z';
     private ?string $customerVATCountry = '';
     private ?string $customerContactName = null;
@@ -247,6 +248,17 @@ class Invoice
         $customerAddress->zipcode = $zipcode;
         $customerAddress->country = $country;
         $this->customerAddress    = $customerAddress;
+    }
+
+    // Customer Code
+    public function getCustomerCode(): ?string
+    {
+        return $this->customerCode;
+    }
+
+    public function setCustomerCode(?string $customerCode): void
+    {
+        $this->customerCode = $customerCode;
     }
 
     // Customer Contact Name
