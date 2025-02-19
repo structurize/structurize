@@ -24,6 +24,7 @@ class Invoice
     private string $customerVAT = '';
     private ?string $customerVATRegime = 'Z';
     private ?string $customerVATCountry = '';
+    private ?string $customerContactName = null;
     private ?string $customerContactTelephone = null;
     private ?string $customerContactElectronicMail = null;
     private string $supplierVAT = '';
@@ -246,6 +247,17 @@ class Invoice
         $customerAddress->zipcode = $zipcode;
         $customerAddress->country = $country;
         $this->customerAddress    = $customerAddress;
+    }
+
+    // Customer Contact Name
+    public function getCustomerContactName(): ?string
+    {
+        return $this->customerContactName;
+    }
+
+    public function setCustomerContactName(?string $customerContactName): void
+    {
+        $this->customerContactName = $customerContactName;
     }
 
     // Customer Contact Telephone
