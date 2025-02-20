@@ -11,6 +11,7 @@ class InvoiceLine
     private float $quantity = 0.00;
     private float $amount = 0.00;
     private float $vatPercentage = 21.00;
+    private ?string $accountingCost = '';
     private ?string $info = '';
 
     // Constructor using property promotion with nullable type for `info`
@@ -82,6 +83,17 @@ class InvoiceLine
     public function setVatPercentage(float $vatPercentage): void
     {
         $this->vatPercentage = $vatPercentage;
+    }
+
+    // Accounting Cost (optional)
+    public function getAccountingCost(): ?string
+    {
+        return $this->accountingCost;
+    }
+
+    public function setAccountingCost(?string $accountingCost): void
+    {
+        $this->accountingCost = $accountingCost;
     }
 
     // Info (optional)
