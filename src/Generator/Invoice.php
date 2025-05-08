@@ -415,6 +415,9 @@ class Invoice
     {
         $this->taxes = $taxes;
     }
+    public function toJson(){
+        return $this->__toString();
+    }
 
     // Method to convert object to JSON
     public function __toString(): string
