@@ -421,20 +421,91 @@ class Invoice
     {
         $vars = get_object_vars($this);
 
+        // Convert addresses to objects
+        if (isset($vars['customerAddress']) && is_object($vars['customerAddress'])) {
+            $vars['customerAddress'] = [
+                'street' => $vars['customerAddress']->street ?? null,
+                'number' => $vars['customerAddress']->number ?? null,
+                'city' => $vars['customerAddress']->city ?? null,
+                'zipcode' => $vars['customerAddress']->zipcode ?? null,
+                'country' => $vars['customerAddress']->country ?? null,
+            ];
+        }
+
+        if (isset($vars['supplierAddress']) && is_object($vars['supplierAddress'])) {
+            $vars['supplierAddress'] = [
+                'street' => $vars['supplierAddress']->street ?? null,
+                'number' => $vars['supplierAddress']->number ?? null,
+                'city' => $vars['supplierAddress']->city ?? null,
+                'zipcode' => $vars['supplierAddress']->zipcode ?? null,
+                'country' => $vars['supplierAddress']->country ?? null,
+            ];
+        }
+
+        // Handle lines and taxes
         $lines = $taxes = [];
-        foreach ($vars as $key => $value) {
-            if (is_array($value)) {
-                foreach ($value as $k => $v) {
-                    if (is_object($v) && get_class($v) == InvoiceLine::class) {
-                        $lines[$k] = json_decode($v->__toString());
-                    } elseif (is_object($v) && get_class($v) == Tax::class) {
-                        $taxes[$k] = json_decode($v->__toString());
-                    }
+        if (isset($vars['lines']) && is_array($vars['lines'])) {
+            foreach ($vars['lines'] as $line) {
+                if (is_object($line)) {
+                    $lines[] = [
+                        'lineId' => $line->lineId ?? null,
+                        'name' => $line->name ?? '',
+                        'description' => $line->description ?? '',
+                        'quantity' => $line->quantity ?? 0,
+                        'amount' => $line->amount ?? 0,
+                        'vatPercentage' => $line->vatPercentage ?? 0,
+                        'info' => $line->info ?? '',
+                    ];
                 }
             }
         }
+
+        if (isset($vars['taxes']) && is_array($vars['taxes'])) {
+            foreach ($vars['taxes'] as $tax) {
+                if (is_object($tax)) {
+                    $taxes[] = [
+                        'vat' => $tax->vat ?? 0,
+                        'amount' => $tax->amount ?? 0,
+                        'percentage' => $tax->percentage ?? 0,
+                    ];
+                }
+            }
+        }
+
         $vars['lines'] = $lines;
         $vars['taxes'] = $taxes;
+
+        // Ensure all required fields are present with default values
+        $defaults = [
+            'documentType' => 'Invoice',
+            'reference' => '',
+            'fileStream' => '',
+            'fileName' => '',
+            'dueDate' => null,
+            'totalVatExcl' => 0,
+            'dueDays' => null,
+            'totalVatIncl' => 0,
+            'issueDate' => null,
+            'vatAmount' => 0,
+            'vatPercentage' => '',
+            'structuredReference' => '',
+            'invoiceNumber' => '',
+            'supplierIBAN' => '',
+            'customerName' => '',
+            'customerVAT' => '',
+            'customerVATRegime' => 'Z',
+            'customerVATCountry' => '',
+            'customerContactTelephone' => null,
+            'customerContactElectronicMail' => null,
+            'supplierVAT' => '',
+            'supplierName' => '',
+            'supplierVATCountry' => '',
+            'supplierBIC' => '',
+            'peppolIdentifier' => '',
+        ];
+
+        $vars = array_merge($defaults, $vars);
+
         return json_encode($vars);
     }
 
