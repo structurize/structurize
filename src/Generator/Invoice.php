@@ -451,13 +451,13 @@ class Invoice
             foreach ($vars['lines'] as $line) {
                 if (is_object($line)) {
                     $lines[] = [
-                        'lineId' => $line->lineId ?? null,
-                        'name' => $line->name ?? '',
-                        'description' => $line->description ?? '',
-                        'quantity' => $line->quantity ?? 0,
-                        'amount' => $line->amount ?? 0,
-                        'vatPercentage' => $line->vatPercentage ?? 0,
-                        'info' => $line->info ?? '',
+                        'lineId' => $line->getLineId() ?? null,
+                        'name' => $line->getName() ?? '',
+                        'description' => $line->getDescription ?? '',
+                        'quantity' => $line->getQuantity() ?? 0,
+                        'amount' => $line->getAmount() ?? 0,
+                        'vatPercentage' => $line->getVatPercentage() ?? 0,
+                        'info' => $line->getInfo() ?? '',
                     ];
                 }
             }
