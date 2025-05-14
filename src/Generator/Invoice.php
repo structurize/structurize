@@ -453,7 +453,7 @@ class Invoice
                     $lines[] = [
                         'lineId' => $line->getLineId() ?? null,
                         'name' => $line->getName() ?? '',
-                        'description' => $line->getDescription ?? '',
+                        'description' => $line->getDescription() ?? '',
                         'quantity' => $line->getQuantity() ?? 0,
                         'amount' => $line->getAmount() ?? 0,
                         'vatPercentage' => $line->getVatPercentage() ?? 0,
