@@ -450,7 +450,7 @@ class Invoice
         if (isset($vars['lines']) && is_array($vars['lines'])) {
             foreach ($vars['lines'] as $line) {
                 if (is_object($line)) {
-                    $lines[] = [
+                    $l = [
                         'lineId' => $line->getLineId() ?? null,
                         'name' => $line->getName() ?? '',
                         'description' => $line->getDescription() ?? '',
@@ -459,6 +459,15 @@ class Invoice
                         'vatPercentage' => $line->getVatPercentage() ?? 0,
                         'info' => $line->getInfo() ?? '',
                     ];
+
+                    $additionalProperties = array_keys(json_decode($line->__toString(), true));
+                    foreach ($additionalProperties as $value) {
+                        if (!in_array($value, ['lineId', 'name', 'description', 'quantity', 'amount', 'vatPercentage', 'info']) && !isset($lines[$value])) {
+                            $l[$value] = method_exists($line, 'get' . ucfirst($value)) ? $line->{'get' . ucfirst($value)}() : null;
+                        }
+                    }
+
+                    $lines[] = $l;
                 }
             }
         }
@@ -466,11 +475,20 @@ class Invoice
         if (isset($vars['taxes']) && is_array($vars['taxes'])) {
             foreach ($vars['taxes'] as $tax) {
                 if (is_object($tax)) {
-                    $taxes[] = [
-                        'vat' => $tax->vat ?? 0,
-                        'amount' => $tax->amount ?? 0,
-                        'percentage' => $tax->percentage ?? 0,
+                    $t = [
+                        'vat' => $tax->getVat() ?? 0,
+                        'amount' => $tax->getAmount() ?? 0,
+                        'percentage' => $tax->getPercentage() ?? 0,
                     ];
+
+                    $additionalProperties = array_keys(json_decode($tax->__toString(), true));
+                    foreach ($additionalProperties as $value) {
+                        if (!in_array($value, ['vat', 'amount', 'percentage']) && !isset($taxes[$value])) {
+                            $l[$value] = method_exists($tax, 'get' . ucfirst($value)) ? $tax->{'get' . ucfirst($value)}() : null;
+                        }
+                    }
+
+                    $taxes[] = $t;
                 }
             }
         }
