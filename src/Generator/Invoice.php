@@ -38,6 +38,7 @@ class Invoice
 
     private ?array $lines = null;
     private ?array $taxes = null;
+    private ?array $paymentTerms = null;
 
     // Constructor with property promotion and default null for nullable fields
     public function __construct()
@@ -415,6 +416,16 @@ class Invoice
     {
         $this->taxes = $taxes;
     }
+
+    public function getPaymentTerms(): array
+    {
+        return (array)$this->paymentTerms;
+    }
+
+    public function setPaymentTerms(?array $paymentTerms): void
+    {
+        $this->paymentTerms = $paymentTerms;
+    }
     public function toJson(){
         return $this->__toString();
     }
@@ -446,7 +457,7 @@ class Invoice
         }
 
         // Handle lines and taxes
-        $lines = $taxes = [];
+        $lines = $taxes = $paymentTerms = [];
         if (isset($vars['lines']) && is_array($vars['lines'])) {
             foreach ($vars['lines'] as $line) {
                 if (is_object($line)) {
@@ -493,8 +504,31 @@ class Invoice
             }
         }
 
-        $vars['lines'] = $lines;
-        $vars['taxes'] = $taxes;
+        if (isset($vars['paymentTerms']) && is_array($vars['paymentTerms'])) {
+            foreach ($vars['paymentTerms'] as $term) {
+                if (is_object($term)) {
+                    $t = [
+                        'note' => $term->getNote() ?? 0,
+                        'amount' => $term->getAmount() ?? 0,
+                        'percentage' => $term->getPercentage() ?? 0,
+                        'duedate' => $term->getDueDate() ?? 0,
+                    ];
+
+                    $additionalProperties = array_keys(json_decode($term->__toString(), true));
+                    foreach ($additionalProperties as $value) {
+                        if (!in_array($value, ['note', 'amount', 'percentage', 'duedate']) && !isset($paymentTerms[$value])) {
+                            $l[$value] = method_exists($term, 'get' . ucfirst($value)) ? $term->{'get' . ucfirst($value)}() : null;
+                        }
+                    }
+
+                    $paymentTerms[] = $t;
+                }
+            }
+        }
+
+        $vars['lines']          = $lines;
+        $vars['taxes']          = $taxes;
+        $vars['paymentTerms']   = $paymentTerms;
 
         // Ensure all required fields are present with default values
         $defaults = [
@@ -560,6 +594,17 @@ class Invoice
                         $taxes[] = $taxLine;
                     }
                     $this->$method($taxes);
+                } elseif ($method == 'setPaymentTerms') {
+                    $paymentTerms = [];
+                    foreach ($value as $term) {
+                        $termLine = new PaymentTerm();
+                        foreach ($term as $key => $value) {
+                            $setter = 'set' . ucfirst($key);
+                            $termLine->$setter($value);
+                        }
+                        $paymentTerms[] = $termLine;
+                    }
+                    $this->$method($paymentTerms);
                 } elseif (is_object($value)) {
                     $params = get_object_vars($value);
                     $this->$method(...$params);
