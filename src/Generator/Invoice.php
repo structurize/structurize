@@ -35,7 +35,7 @@ class Invoice
     private ?string $supplierVATCountry = '';
     private ?string $supplierBIC = null;
     private ?string $peppolIdentifier = null;
-
+    private ?string $fullPeppolId = null;
     private ?array $lines = null;
     private ?array $taxes = null;
     private ?array $paymentTerms = null;
@@ -245,6 +245,19 @@ class Invoice
     {
         $this->peppolIdentifier = $peppolIdentifier;
     }
+
+    //Full PeppolId
+
+    public function getFullPeppolId(): ?string
+    {
+        return $this->fullPeppolId;
+    }
+
+    public function setFullPeppolId(?string $fullPeppolId): void
+    {
+        $this->fullPeppolId = $fullPeppolId;
+    }
+
 
     // Customer Address
     public function getCustomerAddress(): object
