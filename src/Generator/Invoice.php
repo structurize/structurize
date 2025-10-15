@@ -29,13 +29,16 @@ class Invoice
     private ?string $customerContactName = null;
     private ?string $customerContactTelephone = null;
     private ?string $customerContactElectronicMail = null;
+    private ?string $customerPeppolIdentifier = null;
+    private ?string $customerFullPeppolId = null;
     private string $supplierVAT = '';
     private ?string $supplierName = null;
     private ?object $supplierAddress = null;
     private ?string $supplierVATCountry = '';
     private ?string $supplierBIC = null;
-    private ?string $peppolIdentifier = null;
-    private ?string $fullPeppolId = null;
+
+    private ?string $supplierPeppolIdentifier = null;
+    private ?string $supplierFullPeppolId = null;
     private ?array $lines = null;
     private ?array $taxes = null;
     private ?array $paymentTerms = null;
@@ -235,27 +238,50 @@ class Invoice
         $this->supplierBIC = $supplierBIC;
     }
 
-    // Peppol Identifier
-    public function getPeppolIdentifier(): ?string
+    //Supplier Peppol Identifier
+    public function getSupplierPeppolIdentifier(): ?string
     {
-        return $this->peppolIdentifier;
+        return $this->supplierPeppolIdentifier;
     }
 
-    public function setPeppolIdentifier(?string $peppolIdentifier): void
+    public function setSupplierPeppolIdentifier(?string $peppolIdentifier): void
     {
-        $this->peppolIdentifier = $peppolIdentifier;
+        $this->supplierPeppolIdentifier = $peppolIdentifier;
     }
 
-    //Full PeppolId
+    //Supplier Full PeppolId
 
-    public function getFullPeppolId(): ?string
+    public function getSupplierFullPeppolId(): ?string
     {
-        return $this->fullPeppolId;
+        return $this->supplierFullPeppolId;
     }
 
-    public function setFullPeppolId(?string $fullPeppolId): void
+    public function setSupplierFullPeppolId(?string $fullPeppolId): void
     {
-        $this->fullPeppolId = $fullPeppolId;
+        $this->supplierFullPeppolId = $fullPeppolId;
+    }
+
+    //Customer Peppol Identifier
+    public function getCustomerPeppolIdentifier(): ?string
+    {
+        return $this->customerPeppolIdentifier;
+    }
+
+    public function setCustomerPeppolIdentifier(?string $peppolIdentifier): void
+    {
+        $this->customerPeppolIdentifier = $peppolIdentifier;
+    }
+
+    //Customer Full PeppolId
+
+    public function getCustomerFullPeppolId(): ?string
+    {
+        return $this->customerFullPeppolId;
+    }
+
+    public function setCustomerFullPeppolId(?string $fullPeppolId): void
+    {
+        $this->customerFullPeppolId = $fullPeppolId;
     }
 
 
