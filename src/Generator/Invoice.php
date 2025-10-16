@@ -217,7 +217,7 @@ class Invoice
     }
 
     // IBAN
-    public function getSupplierIBAN(): string
+    public function getSupplierIBAN(): ?string
     {
         return $this->supplierIBAN;
     }
@@ -228,7 +228,7 @@ class Invoice
     }
 
     // Supplier BIC
-    public function getSupplierBIC(): string
+    public function getSupplierBIC(): ?string
     {
         return $this->supplierBIC;
     }
