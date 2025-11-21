@@ -67,7 +67,7 @@ class StructurizeApi
             CURLOPT_URL => $_ENV['STRUCTURIZE_API_URL'] . 'upload',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array('file' => new \CURLFile($file, mime_content_type($file), posted_filename: $name)),
+            CURLOPT_POSTFIELDS => array('file' => new \CURLFile($file, mime_content_type($file), $name)),
             CURLOPT_HTTPHEADER => [
                 'Authorization: Bearer ' . $_ENV['STRUCTURIZE_API_KEY'],
             ],
