@@ -4,9 +4,9 @@ namespace Structurize\Structurize\Generator;
 class Tax
 {
     // Properties with type declarations
-    private float $vat = 0.00;
-    private float $amount = 0.00;
-    private float $percentage = 0.00;
+    private $vat = 0.00;
+    private $amount = 0.00;
+    private $percentage = 0.00;
 
     // Constructor using property promotion with nullable type for `info`
     public function __construct(){}
@@ -14,40 +14,40 @@ class Tax
     // Getters and Setters
 
     // Vat
-    public function getVat(): float
+    public function getVat()
     {
         return $this->vat;
     }
 
-    public function setVat(float $lineId): void
+    public function setVat(float $lineId)
     {
         $this->vat = $lineId;
     }
 
     // Amount
-    public function getAmount(): float
+    public function getAmount()
     {
         return $this->amount;
     }
 
-    public function setAmount(float $name): void
+    public function setAmount(float $name)
     {
         $this->amount = $name;
     }
 
     // Percentage
-    public function getPercentage(): float
+    public function getPercentage()
     {
         return $this->percentage;
     }
 
-    public function setPercentage(float $description): void
+    public function setPercentage(float $description)
     {
         $this->percentage = $description;
     }
 
     // Method to convert object to JSON
-    public function __toString(): string
+    public function __toString()
     {
         return json_encode(get_object_vars($this));
     }

@@ -5,14 +5,14 @@ namespace Structurize\Structurize\Generator;
 class InvoiceLine
 {
     // Properties with type declarations
-    private int $lineId = 0;
-    private ?string $name = '';
-    private ?string $description = '';
-    private float $quantity = 0.00;
-    private float $amount = 0.00;
-    private float $vatPercentage = 21.00;
-    private ?string $accountingCost = '';
-    private ?string $info = '';
+    private $lineId = 0;
+    private $name = '';
+    private $description = '';
+    private $quantity = 0.00;
+    private $amount = 0.00;
+    private $vatPercentage = 21.00;
+    private $accountingCost = '';
+    private $info = '';
 
     // Constructor using property promotion with nullable type for `info`
     public function __construct(){}
@@ -20,95 +20,95 @@ class InvoiceLine
     // Getters and Setters
 
     // Line ID
-    public function getLineId(): int
+    public function getLineId()
     {
         return $this->lineId;
     }
 
-    public function setLineId(int $lineId): void
+    public function setLineId(int $lineId)
     {
         $this->lineId = $lineId;
     }
 
     // Name
-    public function getName(): ?string
+    public function getName()
     {
         return $this->name;
     }
 
-    public function setName(?string $name): void
+    public function setName($name)
     {
         $this->name = $name;
     }
 
     // Description
-    public function getDescription(): ?string
+    public function getDescription()
     {
         return $this->description;
     }
 
-    public function setDescription(?string $description): void
+    public function setDescription($description)
     {
         $this->description = $description;
     }
 
     // Quantity
-    public function getQuantity(): float
+    public function getQuantity()
     {
         return $this->quantity;
     }
 
-    public function setQuantity(float $quantity): void
+    public function setQuantity(float $quantity)
     {
         $this->quantity = $quantity;
     }
 
     // Amount
-    public function getAmount(): float
+    public function getAmount()
     {
         return $this->amount;
     }
 
-    public function setAmount(float $amount): void
+    public function setAmount(float $amount)
     {
         $this->amount = $amount;
     }
 
     // VAT Percentage
-    public function getVatPercentage(): float
+    public function getVatPercentage()
     {
         return $this->vatPercentage;
     }
 
-    public function setVatPercentage(float $vatPercentage): void
+    public function setVatPercentage(float $vatPercentage)
     {
         $this->vatPercentage = $vatPercentage;
     }
 
     // Accounting Cost (optional)
-    public function getAccountingCost(): ?string
+    public function getAccountingCost()
     {
         return $this->accountingCost;
     }
 
-    public function setAccountingCost(?string $accountingCost): void
+    public function setAccountingCost($accountingCost)
     {
         $this->accountingCost = $accountingCost;
     }
 
     // Info (optional)
-    public function getInfo(): ?string
+    public function getInfo()
     {
         return $this->info;
     }
 
-    public function setInfo(?string $info): void
+    public function setInfo($info)
     {
         $this->info = $info;
     }
 
     // Method to convert object to JSON
-    public function __toString(): string
+    public function __toString()
     {
         return json_encode(get_object_vars($this));
     }
