@@ -11,7 +11,7 @@ class ImageResize extends StructurizeApi implements Brick
      * @param string $input
      * @return void
      */
-    public function __construct(string $input, $width, $format = 'png')
+    public function __construct(string $input, int|string $width, $format = 'png')
     {
         $this->input = $input;
         $this->width = (int) $width;

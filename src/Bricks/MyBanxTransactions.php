@@ -7,11 +7,11 @@ use Structurize\Structurize\StructurizeApi;
 class MyBanxTransactions extends StructurizeApi implements Brick
 {
 
-    private $identifiers;
-    private $bankAccountId;
-    private $page_id;
-    private $transactions;
-    private $params;
+    private array $identifiers;
+    private string $bankAccountId;
+    private int $page_id;
+    private array $transactions;
+    private array $params;
 
     public function __construct(array $identifiers, string $bankAccountId, int $page_id = 0, array $transactions = [], array $params = [])
     {

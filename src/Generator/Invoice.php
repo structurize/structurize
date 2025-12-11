@@ -4,113 +4,116 @@ namespace Structurize\Structurize\Generator;
 
 class Invoice
 {
-    // Properties (zonder typed properties voor PHP 7.0)
-    private $documentType = 'INVOICE';
-    private $reference = '';
-    private $projectReference = null;
-    private $fileStream = null;
-    private $fileName = null;
-    private $dueDate = null;
-    private $totalVatExcl = 0;
-    private $dueDays = null;
-    private $totalVatIncl = 0;
-    private $issueDate = '';
-    private $vatAmount = 0;
-    private $vatPercentage = '';
-    private $structuredReference = null;
-    private $invoiceNumber = '';
-    private $supplierIBAN = null;
-    private $customerName = '';
-    private $customerAddress = null;
-    private $customerVAT = '';
-    private $customerCode = '';
-    private $customerVATRegime = 'Z';
-    private $customerVATCountry = '';
-    private $customerContactName = null;
-    private $customerContactTelephone = null;
-    private $customerContactElectronicMail = null;
-    private $customerPeppolIdentifier = null;
-    private $customerFullPeppolId = null;
-    private $supplierVAT = '';
-    private $supplierName = null;
-    private $supplierAddress = null;
-    private $supplierVATCountry = '';
-    private $supplierBIC = null;
+    // Properties with type declarations
+    private string $documentType = 'INVOICE';
+    private string $reference = '';
+    private ?string $projectReference = null;
+    private ?string $fileStream = null;
+    private ?string $fileName = null;
+    private ?string $dueDate = null;
+    private float $totalVatExcl = 0;
+    private ?string $dueDays = null;
+    private float $totalVatIncl = 0;
+    private string $issueDate = '';
+    private float $vatAmount = 0;
+    private ?string $vatPercentage = '';
+    private ?string $structuredReference = null;
+    private string $invoiceNumber = '';
+    private ?string $supplierIBAN = null;
+    private string $customerName = '';
+    private object $customerAddress;
+    private string $customerVAT = '';
+    private ?string $customerCode = '';
+    private ?string $customerVATRegime = 'Z';
+    private ?string $customerVATCountry = '';
+    private ?string $customerContactName = null;
+    private ?string $customerContactTelephone = null;
+    private ?string $customerContactElectronicMail = null;
+    private ?string $customerPeppolIdentifier = null;
+    private ?string $customerFullPeppolId = null;
+    private string $supplierVAT = '';
+    private ?string $supplierName = null;
+    private ?object $supplierAddress = null;
+    private ?string $supplierVATCountry = '';
+    private ?string $supplierBIC = null;
 
-    private $supplierPeppolIdentifier = null;
-    private $supplierFullPeppolId = null;
-    private $lines = null;
-    private $taxes = null;
-    private $paymentTerms = null;
+    private ?string $supplierPeppolIdentifier = null;
+    private ?string $supplierFullPeppolId = null;
+    private ?array $lines = null;
+    private ?array $taxes = null;
+    private ?array $paymentTerms = null;
 
-    private $attachments = null;
+    private ?array $attachments = null;
 
+    // Constructor with property promotion and default null for nullable fields
     public function __construct()
     {
     }
 
+    // Getters and Setters for each field
+
     // Document Type
-    public function getDocumentType()
+    public function getDocumentType(): ?string
     {
         return $this->documentType;
     }
 
-    public function setDocumentType($documentType)
+    public function setDocumentType(string $documentType): void
     {
         $this->documentType = $documentType;
     }
 
     // Reference
-    public function getReference()
+    public function getReference(): ?string
     {
         return $this->reference;
     }
 
-    public function setReference($reference = null)
+    public function setReference(?string $reference): void
     {
         $this->reference = $reference;
     }
 
     // Project Reference
-    public function getProjectReference()
+    public function getProjectReference(): ?string
     {
         return $this->projectReference;
     }
 
-    public function setProjectReference($projectReference = null)
+    public function setProjectReference(?string $projectReference): void
     {
         $this->projectReference = $projectReference;
     }
 
     // File Stream
-    public function getFileStream()
+    public function getFileStream(): ?string
     {
         return $this->fileStream;
     }
 
-    public function setFileStream($fileStream = null)
+    public function setFileStream(?string $fileStream): void
     {
         $this->fileStream = $fileStream;
     }
 
     // File Name
-    public function getFileName()
+    public function getFileName(): ?string
     {
         return $this->fileName;
     }
 
-    public function setFileName($fileName = null)
+    public function setFileName(?string $fileName): void
     {
         $this->fileName = $fileName;
     }
 
     // Due Date
-    public function getDueDate()
+    public function getDueDate(): ?string
     {
         return $this->dueDate;
     }
 
-    public function setDueDate($dueDate = null)
+    public function setDueDate(?string $dueDate): void
     {
         $this->dueDate = $dueDate;
     }
@@ -121,18 +124,18 @@ class Invoice
         return $this->totalVatExcl;
     }
 
-    public function setTotalVatExcl($totalVatExcl)
+    public function setTotalVatExcl(string $totalVatExcl): void
     {
         $this->totalVatExcl = $totalVatExcl;
     }
 
     // Due Days
-    public function getDueDays()
+    public function getDueDays(): string
     {
         return $this->dueDays ?? 0;
     }
 
-    public function setDueDays($dueDays = null)
+    public function setDueDays(?string $dueDays): void
     {
         $this->dueDays = $dueDays;
     }
@@ -143,7 +146,7 @@ class Invoice
         return $this->totalVatIncl;
     }
 
-    public function setTotalVatIncl(float $totalVatIncl)
+    public function setTotalVatIncl(float $totalVatIncl): void
     {
         $this->totalVatIncl = $totalVatIncl;
     }
@@ -154,7 +157,7 @@ class Invoice
         return $this->issueDate;
     }
 
-    public function setIssueDate(string $issueDate)
+    public function setIssueDate(string $issueDate): void
     {
         $this->issueDate = $issueDate;
     }
@@ -165,29 +168,29 @@ class Invoice
         return $this->vatAmount;
     }
 
-    public function setVatAmount(float $vatAmount)
+    public function setVatAmount(float $vatAmount): void
     {
         $this->vatAmount = $vatAmount;
     }
 
     // VAT Percentage
-    public function getVatPercentage()
+    public function getVatPercentage(): ?string
     {
         return $this->vatPercentage;
     }
 
-    public function setVatPercentage($vatPercentage = null)
+    public function setVatPercentage(?string $vatPercentage): void
     {
         $this->vatPercentage = $vatPercentage;
     }
 
     // Structured Reference
-    public function getStructuredReference()
+    public function getStructuredReference(): ?string
     {
         return $this->structuredReference;
     }
 
-    public function setStructuredReference($structuredReference = null)
+    public function setStructuredReference(?string $structuredReference): void
     {
         $this->structuredReference = $structuredReference;
     }
@@ -198,10 +201,11 @@ class Invoice
         return $this->customerName;
     }
 
-    public function setCustomerName(string $customerName)
+    public function setCustomerName(string $customerName): void
     {
         $this->customerName = $customerName;
     }
+
 
     // Invoice Number
     public function getInvoiceNumber(): string
@@ -209,84 +213,87 @@ class Invoice
         return $this->invoiceNumber;
     }
 
-    public function setInvoiceNumber(string $invoiceNumber)
+    public function setInvoiceNumber(string $invoiceNumber): void
     {
         $this->invoiceNumber = $invoiceNumber;
     }
 
     // IBAN
-    public function getSupplierIBAN()
+    public function getSupplierIBAN(): ?string
     {
         return $this->supplierIBAN;
     }
 
-    public function setSupplierIBAN($supplierIBAN = null)
+    public function setSupplierIBAN(?string $supplierIBAN): void
     {
         $this->supplierIBAN = $supplierIBAN;
     }
 
     // Supplier BIC
-    public function getSupplierBIC()
+    public function getSupplierBIC(): ?string
     {
         return $this->supplierBIC;
     }
 
-    public function setSupplierBIC($supplierBIC = null)
+    public function setSupplierBIC(?string $supplierBIC): void
     {
         $this->supplierBIC = $supplierBIC;
     }
 
-    // Supplier Peppol Identifier
-    public function getSupplierPeppolIdentifier()
+    //Supplier Peppol Identifier
+    public function getSupplierPeppolIdentifier(): ?string
     {
         return $this->supplierPeppolIdentifier;
     }
 
-    public function setSupplierPeppolIdentifier($peppolIdentifier = null)
+    public function setSupplierPeppolIdentifier(?string $peppolIdentifier): void
     {
         $this->supplierPeppolIdentifier = $peppolIdentifier;
     }
 
-    // Supplier Full PeppolId
-    public function getSupplierFullPeppolId()
+    //Supplier Full PeppolId
+
+    public function getSupplierFullPeppolId(): ?string
     {
         return $this->supplierFullPeppolId;
     }
 
-    public function setSupplierFullPeppolId($fullPeppolId = null)
+    public function setSupplierFullPeppolId(?string $fullPeppolId): void
     {
         $this->supplierFullPeppolId = $fullPeppolId;
     }
 
-    // Customer Peppol Identifier
-    public function getCustomerPeppolIdentifier()
+    //Customer Peppol Identifier
+    public function getCustomerPeppolIdentifier(): ?string
     {
         return $this->customerPeppolIdentifier;
     }
 
-    public function setCustomerPeppolIdentifier($peppolIdentifier = null)
+    public function setCustomerPeppolIdentifier(?string $peppolIdentifier): void
     {
         $this->customerPeppolIdentifier = $peppolIdentifier;
     }
 
-    // Customer Full PeppolId
-    public function getCustomerFullPeppolId()
+    //Customer Full PeppolId
+
+    public function getCustomerFullPeppolId(): ?string
     {
         return $this->customerFullPeppolId;
     }
 
-    public function setCustomerFullPeppolId($fullPeppolId = null)
+    public function setCustomerFullPeppolId(?string $fullPeppolId): void
     {
         $this->customerFullPeppolId = $fullPeppolId;
     }
 
+
     // Customer Address
-    public function getCustomerAddress()
+    public function getCustomerAddress(): object
     {
         return $this->customerAddress;
     }
 
-    public function setCustomerAddress($street = null, $number = null, $city = null, $zipcode = null, $country = null)
+    public function setCustomerAddress($street = null, $number = null, $city = null, $zipcode = null, $country = null): void
     {
         $customerAddress          = new \stdClass();
         $customerAddress->street  = $street;
@@ -298,45 +305,45 @@ class Invoice
     }
 
     // Customer Code
-    public function getCustomerCode()
+    public function getCustomerCode(): ?string
     {
         return $this->customerCode;
     }
 
-    public function setCustomerCode($customerCode = null)
+    public function setCustomerCode(?string $customerCode): void
     {
         $this->customerCode = $customerCode;
     }
 
     // Customer Contact Name
-    public function getCustomerContactName()
+    public function getCustomerContactName(): ?string
     {
         return $this->customerContactName;
     }
 
-    public function setCustomerContactName($customerContactName = null)
+    public function setCustomerContactName(?string $customerContactName): void
     {
         $this->customerContactName = $customerContactName;
     }
 
     // Customer Contact Telephone
-    public function getCustomerContactTelephone()
+    public function getCustomerContactTelephone(): ?string
     {
         return $this->customerContactTelephone;
     }
 
-    public function setCustomerContactTelephone($customerContactTelephone = null)
+    public function setCustomerContactTelephone(?string $customerContactTelephone): void
     {
         $this->customerContactTelephone = $customerContactTelephone;
     }
 
     // Customer Contact Electronic Mail
-    public function getCustomerContactElectronicMail()
+    public function getCustomerContactElectronicMail(): ?string
     {
         return $this->customerContactElectronicMail;
     }
 
-    public function setCustomerContactElectronicMail($customerContactElectronicMail = null)
+    public function setCustomerContactElectronicMail(?string $customerContactElectronicMail): void
     {
         $this->customerContactElectronicMail = $customerContactElectronicMail;
     }
@@ -347,7 +354,7 @@ class Invoice
         return $this->supplierVAT;
     }
 
-    public function setSupplierVAT(string $supplierVAT)
+    public function setSupplierVAT(string $supplierVAT): void
     {
         $this->supplierVAT = $supplierVAT;
     }
@@ -358,7 +365,7 @@ class Invoice
         return $this->customerVAT;
     }
 
-    public function setCustomerVAT(string $customerVAT)
+    public function setCustomerVAT(string $customerVAT): void
     {
         $this->customerVAT = $customerVAT;
     }
@@ -369,40 +376,40 @@ class Invoice
         return $this->customerVATRegime;
     }
 
-    public function setCustomerVATRegime($customerVATRegime = null)
+    public function setCustomerVATRegime(?string $customerVATRegime): void
     {
         $this->customerVATRegime = $customerVATRegime;
     }
 
     // Supplier VAT Country
-    public function getSupplierVATCountry()
+    public function getSupplierVATCountry(): ?string
     {
         return $this->supplierVATCountry;
     }
 
-    public function setSupplierVATCountry($supplierVATCountry = null)
+    public function setSupplierVATCountry(?string $supplierVATCountry): void
     {
         $this->supplierVATCountry = $supplierVATCountry;
     }
 
     // Customer VAT Country
-    public function getCustomerVATCountry()
+    public function getCustomerVATCountry(): ?string
     {
         return $this->customerVATCountry;
     }
 
-    public function setCustomerVATCountry($customerVATCountry = null)
+    public function setCustomerVATCountry(?string $customerVATCountry): void
     {
         $this->customerVATCountry = $customerVATCountry;
     }
 
     // Supplier Address
-    public function getSupplierAddress()
+    public function getSupplierAddress(): ?object
     {
         return $this->supplierAddress;
     }
 
-    public function setSupplierAddress($street = null, $number = null, $city = null, $zipcode = null, $country = null)
+    public function setSupplierAddress($street = null, $number = null, $city = null, $zipcode = null, $country = null): void
     {
         $supplierAddress          = new \stdClass();
         $supplierAddress->street  = $street;
@@ -413,16 +420,20 @@ class Invoice
         $this->supplierAddress    = $supplierAddress;
     }
 
+
+
     // Supplier Name
-    public function getSupplierName()
+    public function getSupplierName(): ?string
     {
         return $this->supplierName;
     }
 
-    public function setSupplierName($supplierName = null)
+    public function setSupplierName(?string $supplierName): void
     {
         $this->supplierName = $supplierName;
     }
+
+    // Lines
 
     /**
      * @return GenericInvoiceLine[]
@@ -432,7 +443,7 @@ class Invoice
         return (array)$this->lines;
     }
 
-    public function setLines($lines = null)
+    public function setLines(?array $lines): void
     {
         $this->lines = $lines;
     }
@@ -442,7 +453,7 @@ class Invoice
         return (array)$this->taxes;
     }
 
-    public function setTaxes($taxes = null)
+    public function setTaxes(?array $taxes): void
     {
         $this->taxes = $taxes;
     }
@@ -452,7 +463,7 @@ class Invoice
         return (array)$this->paymentTerms;
     }
 
-    public function setPaymentTerms($paymentTerms = null)
+    public function setPaymentTerms(?array $paymentTerms): void
     {
         $this->paymentTerms = $paymentTerms;
     }
@@ -462,7 +473,7 @@ class Invoice
         return (array)$this->attachments;
     }
 
-    public function setAttachments($attachments = null)
+    public function setAttachments(?array $attachments): void
     {
         $this->attachments = $attachments;
     }
@@ -566,11 +577,11 @@ class Invoice
                     $paymentTerms[] = $t;
                 }
             }
-        }     
+        }
 
-        $vars['lines']        = $lines;
-        $vars['taxes']        = $taxes;
-        $vars['paymentTerms'] = $paymentTerms;
+        $vars['lines']          = $lines;
+        $vars['taxes']          = $taxes;
+        $vars['paymentTerms']   = $paymentTerms;
 
         // Ensure all required fields are present with default values
         $defaults = [
@@ -609,17 +620,18 @@ class Invoice
     public function fromJson($json)
     {
         $json = json_decode($json);
-        // loop json and set value via setter
+        //loop json and set value via setter
         foreach ($json as $key => $value) {
             $method = 'set' . ucfirst($key);
             if (method_exists($this, $method)) {
+                //if the method is setLines, loop the lines and create a new InvoiceLine object
                 if ($method == 'setLines') {
                     $lines = [];
                     foreach ($value as $line) {
                         $invoiceLine = new InvoiceLine();
-                        foreach ($line as $k => $v) {
-                            $setter = 'set' . ucfirst($k);
-                            $invoiceLine->$setter($v);
+                        foreach ($line as $key => $value) {
+                            $setter = 'set' . ucfirst($key);
+                            $invoiceLine->$setter($value);
                         }
                         $lines[] = $invoiceLine;
                     }
@@ -628,9 +640,9 @@ class Invoice
                     $taxes = [];
                     foreach ($value as $tax) {
                         $taxLine = new Tax();
-                        foreach ($tax as $k => $v) {
-                            $setter = 'set' . ucfirst($k);
-                            $taxLine->$setter($v);
+                        foreach ($tax as $key => $value) {
+                            $setter = 'set' . ucfirst($key);
+                            $taxLine->$setter($value);
                         }
                         $taxes[] = $taxLine;
                     }
@@ -639,9 +651,9 @@ class Invoice
                     $paymentTerms = [];
                     foreach ($value as $term) {
                         $termLine = new PaymentTerm();
-                        foreach ($term as $k => $v) {
-                            $setter = 'set' . ucfirst($k);
-                            $termLine->$setter($v);
+                        foreach ($term as $key => $value) {
+                            $setter = 'set' . ucfirst($key);
+                            $termLine->$setter($value);
                         }
                         $paymentTerms[] = $termLine;
                     }
@@ -654,5 +666,9 @@ class Invoice
                 }
             }
         }
+
+
     }
+
+
 }

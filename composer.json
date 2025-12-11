@@ -2,9 +2,6 @@
     "name": "structurize/structurize",
     "description": "This package serves as a tool to seamlessly connect with the Structurize API.",
     "type": "library",
-    "require": {
-        "php": ">=7.0"
-    },
     "autoload": {
         "psr-4": {
             "Structurize\\Structurize\\": "src/"

@@ -7,9 +7,9 @@ use Structurize\Structurize\StructurizeApi;
 class MyBanxPayment extends StructurizeApi implements Brick
 {
 
-    private $identifiers;
-    private $bankAccountId;
-    private $paymentData;
+    private array $identifiers;
+    private string $bankAccountId;
+    private array $paymentData;
 
     public function __construct(array $identifiers, string $bankAccountId, array $paymentData)
     {

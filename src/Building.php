@@ -89,8 +89,6 @@ class Building extends StructurizeApi
     private function build(bool $sync = false): string
     {
         $extraBrickNumber = 1;
-        $building = []; // Init om notices te vermijden
-
         foreach ($this->bricks as $brick) {
             if (isset($brick->input)) {
                 $this->input = $brick->input;
