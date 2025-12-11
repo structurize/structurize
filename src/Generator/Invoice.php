@@ -556,7 +556,7 @@ class Invoice
                 }
             }
         }
-    
+
         if (isset($vars['paymentTerms']) && is_array($vars['paymentTerms'])) {
             foreach ($vars['paymentTerms'] as $term) {
                 if (is_object($term)) {
@@ -688,7 +688,11 @@ class Invoice
                         $attachments[] = $attachmentLine;
                     }
                     $this->$method($attachments);
-                } else {
+                }elseif (is_object($value)) {
+                    $params = get_object_vars($value);
+                    $this->$method(...$params);
+                }
+                else {
                     $this->$method($value);
                 }
             }
