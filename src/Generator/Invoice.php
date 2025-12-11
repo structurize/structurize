@@ -510,7 +510,7 @@ class Invoice
         }
 
         // Handle lines and taxes
-        $lines = $taxes = $paymentTerms = [];
+        $lines = $taxes = $paymentTerms = $attachments = [];
         if (isset($vars['lines']) && is_array($vars['lines'])) {
             foreach ($vars['lines'] as $line) {
                 if (is_object($line)) {
@@ -556,7 +556,7 @@ class Invoice
                 }
             }
         }
-
+    
         if (isset($vars['paymentTerms']) && is_array($vars['paymentTerms'])) {
             foreach ($vars['paymentTerms'] as $term) {
                 if (is_object($term)) {
@@ -579,10 +579,29 @@ class Invoice
             }
         }
 
+        if (isset($vars['attachments']) && is_array($vars['attachments'])) {
+            foreach ($vars['attachments'] as $attachment) {
+                if (is_object($attachment)) {
+                    $a = [
+                        'name' => $attachment->getName() ?? '',
+                        'stream' => $attachment->getStream() ?? '',
+                    ];
+
+                    $additionalProperties = array_keys(json_decode($attachment->__toString(), true));
+                    foreach ($additionalProperties as $value) {
+                        if (!in_array($value, ['name', 'stream']) && !isset($attachments[$value])) {
+                            $a[$value] = method_exists($attachment, 'get' . ucfirst($value)) ? $attachment->{'get' . ucfirst($value)}() : null;
+                        }
+                    }
+
+                    $attachments[] = $a;
+                }
+            }
+        }
         $vars['lines']          = $lines;
         $vars['taxes']          = $taxes;
         $vars['paymentTerms']   = $paymentTerms;
-
+        $vars['attachments']    = $attachments;
         // Ensure all required fields are present with default values
         $defaults = [
             'documentType' => 'Invoice',
@@ -658,9 +677,17 @@ class Invoice
                         $paymentTerms[] = $termLine;
                     }
                     $this->$method($paymentTerms);
-                } elseif (is_object($value)) {
-                    $params = get_object_vars($value);
-                    $this->$method(...$params);
+                }elseif ($method == 'setAttachments') {
+                    $attachments = [];
+                    foreach ($value as $attachment) {
+                        $attachmentLine = new Attachment();
+                        foreach ($attachment as $key => $value) {
+                            $setter = 'set' . ucfirst($key);
+                            $attachmentLine->$setter($value);
+                        }
+                        $attachments[] = $attachmentLine;
+                    }
+                    $this->$method($attachments);
                 } else {
                     $this->$method($value);
                 }
