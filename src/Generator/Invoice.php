@@ -43,6 +43,8 @@ class Invoice
     private $taxes = null;
     private $paymentTerms = null;
 
+    private $attachments = null;
+
     public function __construct()
     {
     }
@@ -455,6 +457,16 @@ class Invoice
         $this->paymentTerms = $paymentTerms;
     }
 
+    public function getAttachments(): array
+    {
+        return (array)$this->attachments;
+    }
+
+    public function setAttachments($attachments = null)
+    {
+        $this->attachments = $attachments;
+    }
+
     public function toJson()
     {
         return $this->__toString();
@@ -554,7 +566,7 @@ class Invoice
                     $paymentTerms[] = $t;
                 }
             }
-        }
+        }     
 
         $vars['lines']        = $lines;
         $vars['taxes']        = $taxes;
