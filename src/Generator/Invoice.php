@@ -7,6 +7,7 @@ class Invoice
     // Properties with type declarations
     private string $documentType = 'INVOICE';
     private string $reference = '';
+    private ?string $projectName = null;
     private ?string $projectReference = null;
     private ?string $fileStream = null;
     private ?string $fileName = null;
@@ -84,6 +85,19 @@ class Invoice
     {
         $this->projectReference = $projectReference;
     }
+
+    // Project Name
+    public function getProjectName(): ?string
+    {
+        return $this->projectName;
+    }
+
+    public function setProjectName(?string $projectName): void
+    {
+        $this->projectName = $projectName;
+    }
+
+
 
     // File Stream
     public function getFileStream(): ?string
