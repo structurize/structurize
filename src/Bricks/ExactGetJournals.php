@@ -17,16 +17,24 @@ class ExactGetJournals extends StructurizeApi implements Brick
 
     public function __toString()
     {
+        $parameters = [
+            "tenant_key" => $this->tenantKey,
+            "type"       => $this->type,
+            "division"   => $this->division,
+            "code"       => $this->code,
+        ];
+
+        if ($this->result !== null && $this->result !== '') {
+            $parameters['result'] = $this->result;
+        }
+
+        if ($this->key !== null && $this->key !== '') {
+            $parameters['key'] = $this->key;
+        }
+
         return json_encode([
             "brick"      => "exact.getJournals",
-            "parameters" => [
-                "tenant_key" => $this->tenantKey,
-                "type"       => $this->type,
-                "division"   => $this->division,
-                "result"     => $this->result,
-                "code"       => $this->code,
-                "key"        => $this->key,
-            ],
+            "parameters" => $parameters,
         ]);
     }
 }

@@ -8,6 +8,7 @@ class ExactDeleteWebhookSubscription extends StructurizeApi implements Brick
 {
     public function __construct(
         private string $tenantKey,
+        private ?int $division,
         private string $topic
     ) {}
 
@@ -17,6 +18,7 @@ class ExactDeleteWebhookSubscription extends StructurizeApi implements Brick
             "brick"      => "exact.deleteWebhookSubscription",
             "parameters" => [
                 "tenant_key" => $this->tenantKey,
+                "division"   => $this->division,
                 "topic"      => $this->topic,
             ],
         ]);

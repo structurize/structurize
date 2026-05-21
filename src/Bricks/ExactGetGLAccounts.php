@@ -16,15 +16,23 @@ class ExactGetGLAccounts extends StructurizeApi implements Brick
 
     public function __toString()
     {
+        $parameters = [
+            "tenant_key" => $this->tenantKey,
+            "division"   => $this->division,
+            "code"       => $this->code,
+        ];
+
+        if ($this->result !== null && $this->result !== '') {
+            $parameters['result'] = $this->result;
+        }
+
+        if ($this->key !== null && $this->key !== '') {
+            $parameters['key'] = $this->key;
+        }
+
         return json_encode([
             "brick"      => "exact.getGLAccounts",
-            "parameters" => [
-                "tenant_key" => $this->tenantKey,
-                "division"   => $this->division,
-                "code"       => $this->code,
-                "result"     => $this->result,
-                "key"        => $this->key,
-            ],
+            "parameters" => $parameters,
         ]);
     }
 }

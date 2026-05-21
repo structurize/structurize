@@ -8,6 +8,7 @@ class ExactCreateWebhookSubscription extends StructurizeApi implements Brick
 {
     public function __construct(
         private string $tenantKey,
+        private ?int $division,
         private string $topic,
         private ?string $callback = null
     ) {}
@@ -18,6 +19,7 @@ class ExactCreateWebhookSubscription extends StructurizeApi implements Brick
             "brick"      => "exact.createWebhookSubscription",
             "parameters" => [
                 "tenant_key" => $this->tenantKey,
+                "division"   => $this->division,
                 "topic"      => $this->topic,
                 "callback"   => $this->callback,
             ],
